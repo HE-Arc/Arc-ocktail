@@ -16,8 +16,8 @@ class CreateQuantitiesTable extends Migration
         Schema::create('quantities', function (Blueprint $table) {
             $table->increments('id');
             $table->float('quantity');
-            $table->foreign('cocktail_id')->references('id')->on('cocktails');
-            $table->foreign('ingredient_id')->references('id')->on('ingredients');
+            $table->foreign('cocktail_id')->references('id')->on('cocktails')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('ingredient_id')->references('id')->on('ingredients')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
