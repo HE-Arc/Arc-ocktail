@@ -23,9 +23,6 @@ class CreateQuantitiesTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('quantities', function (Blueprint $table) {
-
-        });
     }
 
     /**
