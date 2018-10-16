@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-    <head>
-        <meta charset="utf-8">
-        <title></title>
-    </head>
-    <body>
-        page index
-    </body>
-</html>
+@extends('layouts.app')
+
+@section('title')
+    {{config('app.name', "Arc'ocktail")}}
+@endsection
+
+@section('content')
+    Index Page
+@endsection

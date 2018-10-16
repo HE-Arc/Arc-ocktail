@@ -17,6 +17,8 @@ class CreateIngredientsTable extends Migration
             $table->increments('id');
             $table->string('name', 45);
             $table->float('alcohol_degree');
+            $table->integer('categorie_id')->unsigned();
+            $table->integer('unit_id')->unsigned();
             $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('set null')->onUpdate('cascade');
             $table->foreign('unit_id')->references('id')->on('units')->onDelete('set null')->onUpdate('cascade');
             $table->timestamps();
