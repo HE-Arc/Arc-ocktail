@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href="{{ asset('css/custom.css') }}" rel="stylesheet" type="text/css" >
 
         <!-- jQuery library -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -13,6 +14,14 @@
         <title>@yield('title')</title>
     </head>
     <body>
+        <header class="row">
+            <div class="col-lg-12">
+                Entete
+            </div>
+        </header>
         @yield('content')
+        <footer class="row">
+              Pied de page
+        </footer>
     </body>
 </html>

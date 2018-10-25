@@ -11,7 +11,7 @@
     @endforeach
 </ul>
 
-<div class="tab-content">
+<div class="col-lg-9">
 
     @foreach ($data['categories'] as $key => $categorie)
         <div id="{{$categorie->name}}" class="tab-pane fade">
