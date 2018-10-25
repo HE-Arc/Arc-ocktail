@@ -12,15 +12,13 @@ class QuantitiesTableSeeder extends Seeder
     public function run()
     {
         DB::table('quantities')->insert([
-            'quantity' => '27',
+            ['quantity' => '27',
             'cocktail_id' => '1',
-            'ingredient_id' => '3',
-        ]);
+            'ingredient_id' => '3'],
 
-        DB::table('quantities')->insert([
-            'quantity' => '3',
+            ['quantity' => '3',
             'cocktail_id' => '1',
-            'ingredient_id' => '2',
+            'ingredient_id' => '2']
         ]);
     }
 }

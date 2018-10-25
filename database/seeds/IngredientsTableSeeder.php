@@ -12,22 +12,20 @@ class IngredientsTableSeeder extends Seeder
     public function run()
     {
         DB::table('ingredients')->insert([
-            'name' => 'Rhum',
+            ['name' => 'Rhum',
             'alcohol_degree' => '37.5',
             'categorie_id' => '1',
-            'unit_id' => '1',
-        ]);
-        DB::table('ingredients')->insert([
-            'name' => 'Whiskey',
+            'unit_id' => '1'],
+
+            ['name' => 'Whiskey',
             'alcohol_degree' => '40',
             'categorie_id' => '1',
-            'unit_id' => '1',
-        ]);
-        DB::table('ingredients')->insert([
-            'name' => 'Vodka',
+            'unit_id' => '1'],
+            
+            ['name' => 'Vodka',
             'alcohol_degree' => '40',
             'categorie_id' => '1',
-            'unit_id' => '1',
+            'unit_id' => '1']
         ]);
     }
 }
