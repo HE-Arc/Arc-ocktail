@@ -12,13 +12,9 @@ class UnitsTableSeeder extends Seeder
     public function run()
     {
         DB::table('units')->insert([
-            'unit' => 'cl'
-        ]);
-        DB::table('units')->insert([
-            'unit' => 'cs'
-        ]);
-        DB::table('units')->insert([
-            'unit' => 'cc'
+            ['unit' => 'cl'],
+            ['unit' => 'cs'],
+            ['unit' => 'cc']
         ]);
     }
 }
