@@ -1,6 +1,3 @@
-body {
-  padding-top: 10px;
-}
 [class*="col-"] {
   background-color: lightgrey;
   border: 1px solid black;
