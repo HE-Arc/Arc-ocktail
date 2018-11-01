@@ -18,9 +18,12 @@ class CreateQuantitiesTable extends Migration
             $table->float('quantity');
             $table->integer('cocktail_id')->unsigned();
             $table->integer('ingredient_id')->unsigned();
+            $table->timestamps();
+        });
+
+        Schema::table('quantities', function (Blueprint $table) {
             $table->foreign('cocktail_id')->references('id')->on('cocktails')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('ingredient_id')->references('id')->on('ingredients')->onDelete('cascade')->onUpdate('cascade');
-            $table->timestamps();
         });
 
     }
