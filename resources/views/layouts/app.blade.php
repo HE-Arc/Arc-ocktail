@@ -15,13 +15,11 @@
     </head>
     <body>
         <header class="row">
-            <div class="col-lg-12">
-                Entete
-            </div>
-        </header>
+            <div class="col-md-12">Entete</div>
+		</header>
         @yield('content')
         <footer class="row">
-              Pied de page
-        </footer>
+		          <div class="col-md-12">Pied de page</div>
+		</footer>
     </body>
 </html>

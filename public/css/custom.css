@@ -1,7 +1,7 @@
 body {
   padding-top: 10px;
 }
-[class*="col-"], footer {
+[class*="col-"] {
   background-color: lightgrey;
   border: 1px solid black;
   border-radius: 5px;
