@@ -22,11 +22,7 @@ class CreateIngredientsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('ingredients', function (Blueprint $table) {
-            $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('set null')->onUpdate('cascade');
-            $table->foreign('unit_id')->references('id')->on('units')->onDelete('set null')->onUpdate('cascade');
-        });
-    }
+ }
 
     /**
      * Reverse the migrations.
