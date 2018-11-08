@@ -28,6 +28,6 @@
         </div>
     </div>
 
-    <div class="col-md-3">Ingerdients</div>
+    <div class="col-md-3">Ingredients</div>
 </div>
 @endsection

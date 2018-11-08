@@ -9,7 +9,6 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
- </body>
         <title>@yield('title')</title>
     </head>
     <body>
@@ -24,7 +23,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-    
+
                 <form class="form-inline my-2 my-lg-0">
                     <button class="btn btn-outline-primary mr-2 my-2 my-sm-0" type="submit">
                         <span class="glyphicon glyphicon-tint" aria-hidden="true"></span>Login
@@ -33,7 +32,7 @@
                 </form>
             </div>
         </div>
-        </nav>
+    </nav>
         @yield('content')
         <footer class="row">
 		          <div class="col-md-12">Pied de page</div>
