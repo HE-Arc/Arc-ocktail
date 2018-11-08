@@ -6,28 +6,54 @@
 
 @section('content')
 
-
 <div class="row">
     <div class="col-md-9">
         <div class="row">
             <ul class="nav nav-tabs col-md-12">
                 @foreach ($data['categories'] as $categorie)
-                    <li><a data-toggle="tab" href="#{{$categorie->name}}">{{$categorie->name}}</a></li>
+                    <button id="{{$categorie->name}}Button">{{$categorie->name}}</button>
                 @endforeach
             </ul>
 
-            @foreach ($data['categories'] as $key => $categorie)
-                <div id="{{$categorie->name}}" class="tab-pane fade">
-                    @foreach($data['ingredients'][$key] as $ingredient)
-                        <div class="col-md-3">
-                            {{$ingredient->name}}
-                        </div>
-                    @endforeach
-                </div>
-            @endforeach
+            <div id="container" class="container"></div>
         </div>
     </div>
 
     <div class="col-md-3">Ingerdients</div>
 </div>
+@endsection
+
+@section('script')
+
+  @foreach ($data['categories'] as $key => $categorie)
+    <script type="text/javascript">
+      $('#{{$categorie->name}}Button').on('click', function()
+      {
+        $.get("{{ URL::to('read-data') }}", function(data)
+        {
+          $('#container').html("");
+          $.each(data.ingredients[{{$key}}], function(i, value)
+          {
+            var tr = $([
+              "<div class='col-sm-12 col-md-6 col-lg-4'>",
+              "  <div class='card'>",
+              "    <img class='card-img-top' src='", value.name, ".png'>",
+              "    <div class='card-body'>",
+              "      <h5 class='card-title'>",
+                       value.name,
+              "      </h5>",
+              "      <a href='#' class='btn btn-primary'>Ajouter</a>",
+              "    </div>",
+              "  </div>",
+              "</div>"
+            ].join("\n"));
+            $('#container').append(tr);
+          })
+
+        })
+
+      });
+    </script>
+  @endforeach
+
 @endsection
