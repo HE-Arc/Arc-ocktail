@@ -12,3 +12,5 @@
 */
 
 Route::get("/", "HomeController@index");
+
+Route::get("read-data", "HomeController@readData");

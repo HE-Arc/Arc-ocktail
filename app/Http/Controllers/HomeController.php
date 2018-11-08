@@ -23,4 +23,20 @@ class HomeController extends Controller
 
         return view('home.index', ['data' => $data]);
     }
+
+    public function readData()
+    {
+      $categories = DB::table('categories')->get();
+      $ingredients = array();
+      foreach($categories as $categorie)
+      {
+          $ingredients[] = DB::table('ingredients')->where('categorie_id', $categorie->id)->get();
+      }
+      $data = [
+          'categories'  => $categories,
+          'ingredients' => $ingredients
+      ];
+
+      return response($data);
+    }
 }
