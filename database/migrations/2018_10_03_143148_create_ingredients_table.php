@@ -19,9 +19,12 @@ class CreateIngredientsTable extends Migration
             $table->float('alcohol_degree');
             $table->integer('categorie_id')->unsigned();
             $table->integer('unit_id')->unsigned();
+            $table->timestamps();
+        });
+
+        Schema::table('ingredients', function (Blueprint $table) {
             $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('set null')->onUpdate('cascade');
             $table->foreign('unit_id')->references('id')->on('units')->onDelete('set null')->onUpdate('cascade');
-            $table->timestamps();
         });
     }
 
