@@ -9,12 +9,16 @@ class CocktailController extends Controller
 {
     public function index()
     {
-        return view("cocktail.index", ["cocktail"=>""]);
+
     }
 
     public function create()
     {
-        return view("cocktail.create", ["cocktail" => new Cocktail()]);
+        // $ingredients = Ingredient::all();
+        // $categories = Categorie::all();
+        // $quantities = Quantity::all();
+        // $units = Unit::all();
+        return view("cocktail.create", ["cocktail"=>""]);
     }
 
     public function store(Request $request)
