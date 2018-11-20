@@ -8,32 +8,69 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <!-- Script for sending with ajax the categorie form -->
 <script>
-jQuery(document).ready(function(){
-            jQuery('#categorieSubmit').click(function(e){
+$(document).ready(function(){
+            $('#categorieSubmit').click(function(e){
                e.preventDefault();
 
-               jQuery.ajax({
+               $.ajax({
                   url: "{{ url('/ingredient') }}",
                   method: 'post',
                   data: {
                       _token: '{{csrf_token()}}',
-                     categorieName: jQuery('#categorieName').val()
+                     categorieName: $('#categorieName').val()
                   },
                   success: function(result){
                   	if(result.errors)
                   	{
-                  		jQuery('.alert-danger').html('');
-                        jQuery('.alert-success').hide();
-                  		jQuery.each(result.errors, function(key, value){
-                  			jQuery('.alert-danger').show();
-                  			jQuery('.alert-danger').append('<li>'+value+'</li>');
+                  		$('.alert-danger').html('');
+                        $('.alert-success').hide();
+                  		$.each(result.errors, function(key, value){
+                  			$('.alert-danger').show();
+                  			$('.alert-danger').append('<li>'+value+'</li>');
                   		});
                   	}
                   	else
                   	{
-                        jQuery('.alert-danger').hide();
-              			jQuery('.alert-success').show();
-              			jQuery('.alert-success').append('<li>'+result.success+'</li>');
+                        $('.alert-danger').hide();
+              			$('.alert-success').show();
+              			$('.alert-success').append('<li>'+result.success+'</li>');
+                        setTimeout(function() {
+                            $(".alert-success").alert('close');
+                        }, 2000);
+                  	}
+                  }});
+               });
+            });
+</script>
+
+<!-- Script for sending with ajax the categorie form -->
+<script>
+$(document).ready(function(){
+            $('#unitSubmit').click(function(e){
+               e.preventDefault();
+
+               $.ajax({
+                  url: "{{ url('/ingredient') }}",
+                  method: 'post',
+                  data: {
+                      _token: '{{csrf_token()}}',
+                     unitName: $('#unitName').val()
+                  },
+                  success: function(result){
+                  	if(result.errors)
+                  	{
+                  		$('.alert-danger').html('');
+                        $('.alert-success').hide();
+                  		$.each(result.errors, function(key, value){
+                  			$('.alert-danger').show();
+                  			$('.alert-danger').append('<li>'+value+'</li>');
+                  		});
+                  	}
+                  	else
+                  	{
+                        $('.alert-danger').hide();
+              			$('.alert-success').show();
+              			$('.alert-success').append('<li>'+result.success+'</li>');
                         setTimeout(function() {
                             $(".alert-success").alert('close');
                         }, 2000);
@@ -45,35 +82,38 @@ jQuery(document).ready(function(){
 
 <!-- Script for sending with ajax the ingredient form -->
 <script>
-jQuery(document).ready(function(){
-            jQuery('#ingredientSubmit').click(function(e){
+$(document).ready(function(){
+            $('#ingredientSubmit').click(function(e){
                e.preventDefault();
-
-               jQuery.ajax({
+               var fd = new FormData();
+               fd.append('image', $("#image").get(0).files[0]);
+               fd.append('_token', "{{csrf_token()}}");
+               fd.append('ingredientName', $('#ingredientName').val());
+               fd.append('alcoholDegree', $('#alcoholDegree').val());
+               fd.append('categorie', $('#categorieId').val());
+               fd.append('unit', $('#unitId').val());
+               $.ajax({
                   url: "{{ url('/ingredient') }}",
                   method: 'post',
-                  data: {
-                      _token: '{{csrf_token()}}',
-                     ingredientName: jQuery('#ingredientName').val(),
-                     alcoholDegree: jQuery('#alcoholDegree').val(),
-                     categorie: jQuery('#categorieId').val(),
-                     unit: jQuery('#unitId').val()
-                  },
+                  data: fd,
+                  cache : false,
+                  processData: false,
+                  contentType: false,
                   success: function(result){
                   	if(result.errors)
                   	{
-                  		jQuery('.alert-danger').html('');
-                        jQuery('.alert-success').hide();
-                  		jQuery.each(result.errors, function(key, value){
-                  			jQuery('.alert-danger').show();
-                  			jQuery('.alert-danger').append('<li>'+value+'</li>');
+                  		$('.alert-danger').html('');
+                        $('.alert-success').hide();
+                  		$.each(result.errors, function(key, value){
+                  			$('.alert-danger').show();
+                  			$('.alert-danger').append('<li>'+value+'</li>');
                   		});
                   	}
                   	else
                   	{
-                        jQuery('.alert-danger').hide();
-              			jQuery('.alert-success').show();
-              			jQuery('.alert-success').append('<li>'+result.success+'</li>');
+                        $('.alert-danger').hide();
+              			$('.alert-success').show();
+              			$('.alert-success').append('<li>'+result.success+'</li>');
                         setTimeout(function() {
                             $(".alert-success").alert('close');
                         }, 2000);
@@ -120,12 +160,48 @@ jQuery(document).ready(function(){
 </div>
 </form>
 
+
+<!-- Button and form to add a unit-->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addUnit">
+  Ajouter une unité
+</button>
+
+<form method="post" action="{{url('ingredient')}}" id="addUnitForm">
+        @csrf
+
+<div class="modal fade" id="addUnit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="alert alert-danger" style="display:none"></div>
+        <div class="alert alert-success" style="display:none"></div>
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ajouter une unité</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+                <label for="Name">Nom de l'unité:</label>
+                <input type="text" class="form-control" name="unitName" id="unitName">
+          </div>
+      </div>
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button  class="btn btn-success" id="unitSubmit">Save changes</button>
+    </div>
+    </div>
+  </div>
+</div>
+</form>
+
+
 <!-- Button and form to add an ingredient-->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addIngredient">
   Ajouter un ingrédient
 </button>
 
-<form method="post" action="{{url('ingredient')}}" id="addIngredientForm">
+<form method="post" action="{{url('ingredient')}}" id="addIngredientForm" enctype="multipart/form-data">
         @csrf
 
 <div class="modal fade" id="addIngredient" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -171,6 +247,11 @@ jQuery(document).ready(function(){
                 @endforeach
                 </select>
           </div>
+          <div class="row">
+                <label for="Name">Image :</label>
+                <input type="file" name="image" id="image">
+          </div>
+
       </div>
       <div class="modal-footer">
       	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

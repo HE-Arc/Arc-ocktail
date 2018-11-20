@@ -34,13 +34,13 @@ class IngredientController extends Controller
 
     public function store(Request $request)
     {
+        $requestOk = false;
         if ($request->has("categorieName"))
         {
             $task = new Categorie;
             $task->name = $request->categorieName;
             $task->save();
-
-            return response()->json(['success'=>'Les données ont étés correctement ajoutés']);
+            $requestOk = true;
         }
         elseif ($request->has("ingredientName"))
         {
@@ -51,10 +51,26 @@ class IngredientController extends Controller
             $task->unit_id = $request->unit;
             $task->save();
 
-            return response()->json(['success'=>'Les données ont étés correctement ajoutés']);
+            $file = $request->image;
+            //Move Uploaded File
+            $destinationPath = 'uploads';
+            $file->move($destinationPath,$file->getClientOriginalName());
+
+            $requestOk = true;
         }
 
-        return response()->json(['errors'=>"Impossible d'ajouter les données"]);
+        elseif ($request->has("unitName"))
+        {
+            $task = new unit;
+            $task->unit = $request->unitName;
+            $task->save();
+            $requestOk = true;
+        }
+
+        if ($requestOk)
+            return response()->json(['success'=>'Les données ont étés correctement ajoutés']);
+        else
+            return response()->json(['errors'=>"Impossible d'ajouter les données"]);
 
     }
 }
