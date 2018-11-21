@@ -59,4 +59,17 @@
         </script>
     @endforeach
 
+    <script type="text/javascript">
+    function eventFire(el, etype){
+      if (el.fireEvent) {
+        el.fireEvent('on' + etype);
+      } else {
+        var evObj = document.createEvent('Events');
+        evObj.initEvent(etype, true, false);
+        el.dispatchEvent(evObj);
+      }
+    }
+    eventFire(document.getElementById('{{$data['categories'][0]->name}}Button'), 'click');
+    </script>
+
 @endsection
