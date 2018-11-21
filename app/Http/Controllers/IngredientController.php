@@ -9,6 +9,7 @@ use App\Categorie;
 use App\Ingredient;
 use App\Quantity;
 use App\Unit;
+use Validator;
 
 class IngredientController extends Controller
 {
@@ -35,42 +36,85 @@ class IngredientController extends Controller
     public function store(Request $request)
     {
         $requestOk = false;
+        $validator = null;
         if ($request->has("categorieName"))
         {
-            $task = new Categorie;
-            $task->name = $request->categorieName;
-            $task->save();
-            $requestOk = true;
+            $rules = [];
+            $rules["categorieName"] = 'required';
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->passes())
+            {
+                $this->createCategorie($request);
+                $requestOk = true;
+            }
+
         }
         elseif ($request->has("ingredientName"))
         {
-            $task = new Ingredient;
-            $task->name = $request->ingredientName;
-            $task->alcohol_degree = $request->alcoholDegree;
-            $task->categorie_id = $request->categorie;
-            $task->unit_id = $request->unit;
-            $task->save();
+            $rules = [];
+            $rules["ingredientName"] = 'required';
+            $rules["alcoholDegree"] = 'required';
+            $rules["categorie"] = 'required';
+            $rules["unit"] = 'required';
+            $rules["image"] = 'required';
 
-            $file = $request->image;
-            //Move Uploaded File
-            $destinationPath = 'uploads';
-            $file->move($destinationPath,$file->getClientOriginalName());
+            $validator = Validator::make($request->all(), $rules);
 
-            $requestOk = true;
+            if ($validator->passes())
+            {
+                $this->createIngredient($request);
+                $requestOk = true;
+            }
         }
 
         elseif ($request->has("unitName"))
         {
-            $task = new unit;
-            $task->unit = $request->unitName;
-            $task->save();
-            $requestOk = true;
+            $rules = [];
+            $rules["unitName"] = 'required';
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->passes())
+            {
+                $this->createUnit($request);
+                $requestOk = true;
+            }
         }
 
         if ($requestOk)
-            return response()->json(['success'=>'Les données ont étés correctement ajoutés']);
-        else
-            return response()->json(['errors'=>"Impossible d'ajouter les données"]);
+            return response()->json(['success'=>'Entry successfully added']);
+        return response()->json(['error'=>$validator->errors()->all()]);
 
+    }
+
+    private function createCategorie(Request $request)
+    {
+        $categorie = new Categorie;
+        $categorie->name = $request->categorieName;
+        $categorie->save();
+    }
+
+    private function createIngredient(Request $request)
+    {
+        $ingredient = new Ingredient;
+        $ingredient->name = $request->ingredientName;
+        $ingredient->alcohol_degree = $request->alcoholDegree;
+        $ingredient->categorie_id = $request->categorie;
+        $ingredient->unit_id = $request->unit;
+        $ingredient->save();
+
+        $file = $request->image;
+        //Move Uploaded File
+        $destinationPath = 'uploads';
+        $file->move($destinationPath, $request->ingredientName . "." . $file->getClientOriginalExtension());
+    }
+
+    private function createUnit(Request $request)
+    {
+        $unit = new unit;
+        $unit->unit = $request->unitName;
+        $unit->save();
     }
 }

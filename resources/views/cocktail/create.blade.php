@@ -9,7 +9,6 @@
 <!-- Script for sending with ajax the categorie form -->
 <script>
 $(document).ready(function(){
-    var i=1;
     $('#addIngredient').click(function(){
         let newIngredient = $('#ingredientsTemplate').clone();
         $(newIngredient).addClass("dynamic-added");
