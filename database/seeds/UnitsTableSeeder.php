@@ -14,7 +14,10 @@ class UnitsTableSeeder extends Seeder
         DB::table('units')->insert([
             ['unit' => 'cl'],
             ['unit' => 'cs'],
-            ['unit' => 'cc']
+            ['unit' => 'cc'],
+            ['unit' => 'pièces'],
+            ['unit' => 'feuilles'],
+            ['unit' => 'pincées'],
         ]);
     }
 }
