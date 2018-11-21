@@ -35,7 +35,7 @@
             </div>
         </nav>
 
-        <div class="container border rounded p-0">
+        <div class="container border rounded mt-3 p-3">
             @yield('content')
             @yield('script')
         </div>
