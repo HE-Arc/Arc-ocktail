@@ -19,10 +19,13 @@
         </div>
         <div class="col-sm-12 col-md-4 col-lg-4">
             <h2>Vos ingrédients</h2>
-            <ul class="list-group">
-                <!-- TODO - foreach selected ingredients -->
-                <!-- <li class="list-group-item">Citron</li> -->
-            </ul>
+            <form action="{{url('findCocktail')}}" method="get" id="cocktailForm">
+                <ul class="list-group">
+                    <!-- TODO - foreach selected ingredients -->
+                    <!-- <li class="list-group-item">Citron</li> -->
+                </ul>
+                <button class="btn btn-primary" id="btnFindCocktail">Trouver des cocktails</button>
+            </form>
         </div>
     </div>
 
@@ -30,9 +33,57 @@
 
 @section('script')
 
+    <script type="text/javascript">
+    let ingredients = [];
+    showOrHideFindButton();
+
+    $('#ingredients').on('click', '.btnIngredient', function (e){
+        let ingredient = e.target;
+        let id = ingredient.value;
+        if (!ingredients.includes(id))
+        {
+            ingredients.push(id);
+            $('.list-group').append("<li class='list-group-item' value='" + id +"'>" + ingredient.name + "<button value='" + id +"' class='btn btnRemoveIngredient'>&times;</button> </li>")
+            $('.list-group').append("<input type='hidden' class='hidden-item' name='ingredients[]' value='" + id + "' />");
+            showOrHideFindButton();
+        }
+    });
+
+    $('.list-group').on('click', '.btnRemoveIngredient', function (e){
+        let ingredient = e.target;
+        let id = ingredient.value;
+
+        var index = ingredients.indexOf(id);
+        if (index > -1) {
+          ingredients.splice(index, 1);
+        }
+        $(".list-group-item[value='"+id+"']").remove();
+        $(".hidden-item[value='"+id+"']").remove();
+        showOrHideFindButton();
+    });
+
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+  });
+
+    $("#btnFindCocktail").click(function(e) {
+        $("#cocktailForm").submit();
+    });
+
+    function showOrHideFindButton()
+    {
+        if (ingredients.length > 0)
+            $("#btnFindCocktail").show();
+        else
+            $("#btnFindCocktail").hide();
+    }
+    </script>
+
     @foreach ($data['categories'] as $key => $categorie)
         <script type="text/javascript">
-            $('#{{$categorie->name}}Button').on('click', function()
+            $('#{{$categorie->name}}Button').click(function()
             {
                 $.get("{{ URL::to('read-data') }}", function(data)
                 {
@@ -47,7 +98,7 @@
                         "      <h5 class='card-title'>",
                             value.name,
                         "      </h5>",
-                        "      <a href='#' class='btn btn-primary'>Ajouter</a>",
+                        "      <button name='" + value.name + "' value='", value.id, "' class='btn btn-primary btnIngredient'>Ajouter</button>",
                         "    </div>",
                         "  </div>",
                         "</div>"
