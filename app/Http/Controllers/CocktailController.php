@@ -61,6 +61,23 @@ class CocktailController extends Controller
         $ingredients = Input::get('ingredients');
         // TODO ingredients contains the id of the ingredient, must return the possible cocktail
         $possibleCocktails = [1, 2, 3];
-        return view("cocktail.showcocktail", ["cocktails"=> $possibleCocktails]);
+
+        $cocktails = DB::table('cocktails')->whereIn('id', $possibleCocktails)->get();
+
+        return view("cocktail.showcocktails", ["cocktails"=> $cocktails]);
+    }
+
+    public function show($id)
+    {
+        $cocktail = DB::table('cocktails')->where('id', $id)->first();
+        $ingredients = DB::table('quantities')
+            ->join('ingredients', 'quantities.ingredient_id', '=', 'ingredients.id')
+            ->join('units', 'ingredients.unit_id', '=', 'units.id')
+            ->select('ingredients.name', 'quantities.quantity', 'units.unit', 'quantities.cocktail_id')
+            ->where('cocktail_id', $id)
+            ->get();
+
+
+        return view("cocktail.show", ["cocktail" => $cocktail, "ingredients" => $ingredients]);
     }
 }
