@@ -15,6 +15,6 @@ Route::get("/", "HomeController@index");
 
 Route::get("read-data", "HomeController@readData");
 Route::resource("ingredient", "IngredientController", ["only"=> ["store", "create"]]);
-Route::resource("cocktail", "CocktailController", ["only"=> ["store", "create"]]);
+Route::resource("cocktail", "CocktailController", ["only"=> ["store", "create", "show"]]);
 
 Route::get('/findCocktail','CocktailController@findCocktail');
