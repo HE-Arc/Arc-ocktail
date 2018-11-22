@@ -16,7 +16,7 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="{{url('/')}}">
                     <img src="{{ asset('icons/logo.png') }}" width="30" height="30" class="d-inline-block align-top" alt="">
                     Arc'ocktail
                 </a>
