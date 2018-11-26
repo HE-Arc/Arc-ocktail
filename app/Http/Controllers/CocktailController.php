@@ -59,12 +59,46 @@ class CocktailController extends Controller
     public function findCocktail()
     {
         $ingredients = Input::get('ingredients');
+        $possibleCocktails = DB::table('cocktails')
+            ->join('quantities', 'quantities.cocktail_id', '=', 'cocktails.id')
+            ->whereIn('ingredient_id', $ingredients)
+            ->select('cocktail_id', 'name')
+            ->groupBy('cocktail_id')
+            ->get();
+            //->pluck('cocktail_id', 'ingredient_id');
         // TODO ingredients contains the id of the ingredient, must return the possible cocktail
-        $possibleCocktails = [1, 2, 3];
+        //$possibleCocktails = [1, 2, 3];
 
-        $cocktails = DB::table('cocktails')->whereIn('id', $possibleCocktails)->get();
+        $this->fillIngredient($possibleCocktails);
+        $this->setPercentageList($possibleCocktails, $ingredients);
+        $possibleCocktails = $possibleCocktails->sortByDesc('percentage');
 
-        return view("cocktail.showcocktails", ["cocktails"=> $cocktails]);
+        return view("cocktail.showcocktails", ["cocktails"=> $possibleCocktails]);
+    }
+
+    private function fillIngredient($possibleCocktails)
+    {
+        foreach($possibleCocktails as $cocktail)
+        {
+            $cocktail->ingredients = DB::table('quantities')
+                ->select('ingredient_id')
+                ->where('cocktail_id', $cocktail->cocktail_id)
+                ->pluck('ingredient_id')->toArray();
+        }
+    }
+
+    private function setPercentageList($possibleCocktails, $ingredients)
+    {
+        foreach($possibleCocktails as $cocktail)
+        {
+            $nbrIngredient = 0;
+            foreach($cocktail->ingredients as $ingredient)
+            {
+                if (in_array($ingredient, $ingredients))
+                    $nbrIngredient++;
+            }
+            $cocktail->percentage = round($nbrIngredient / count($cocktail->ingredients), 2);
+        }
     }
 
     public function show($id)
@@ -76,7 +110,6 @@ class CocktailController extends Controller
             ->select('ingredients.name', 'quantities.quantity', 'units.unit', 'quantities.cocktail_id')
             ->where('cocktail_id', $id)
             ->get();
-
 
         return view("cocktail.show", ["cocktail" => $cocktail, "ingredients" => $ingredients]);
     }

@@ -8,12 +8,12 @@
 
 @foreach ($cocktails as $key => $cocktail)
 <div class='col-sm-12 col-md-6 col-lg-4 p-2'>
-    <a href="{{url('cocktail/' . $cocktail->id)}}">
+    <a href="{{url('cocktail/' . $cocktail->cocktail_id)}}">
         <div class='card'>
             <img class='card-img-top p-1' src='uploads/{{$cocktail->name}}.jpg'>
                 <div class='card-body'>
                     <h5 class='card-title'>
-                    {{$cocktail->name}}
+                    {{$cocktail->name}} ({{$cocktail->percentage}} match)
                     </h5>
                 </div>
         </div>
