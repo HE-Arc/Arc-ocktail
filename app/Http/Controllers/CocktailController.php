@@ -63,6 +63,7 @@ class CocktailController extends Controller
             ->join('quantities', 'quantities.cocktail_id', '=', 'cocktails.id')
             ->whereIn('ingredient_id', $ingredients)
             ->select('cocktail_id', 'name')
+            ->groupBy('cocktail_id')
             ->get();
             //->pluck('cocktail_id', 'ingredient_id');
         // TODO ingredients contains the id of the ingredient, must return the possible cocktail
@@ -96,7 +97,7 @@ class CocktailController extends Controller
                 if (in_array($ingredient, $ingredients))
                     $nbrIngredient++;
             }
-            $cocktail->percentage = $nbrIngredient / count($cocktail->ingredients);
+            $cocktail->percentage = round($nbrIngredient / count($cocktail->ingredients), 2);
         }
     }
 
