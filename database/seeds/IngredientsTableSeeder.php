@@ -27,7 +27,7 @@ class IngredientsTableSeeder extends Seeder
             ['name' => 'Sirop de canne',
             'alcohol_degree' => '0',
             'categorie_id' => '3',
-            'unit_id' => '5'],
+            'unit_id' => '1'],
             ['name' => 'Eau gazeuse',
             'alcohol_degree' => '0',
             'categorie_id' => '2',
