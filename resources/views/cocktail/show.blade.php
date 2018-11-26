@@ -8,7 +8,7 @@
 
 <div class='col-sm-12 col-md-6 col-lg-4 p-2'>
     <div class='card'>
-        <img class='card-img-top p-1' src='uploads/{{$cocktail->name}}.jpg'>
+        <img class='card-img-top p-1' src='../uploads/{{$cocktail->name}}.jpg'>
     </div>
 
     <div>
