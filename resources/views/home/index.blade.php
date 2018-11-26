@@ -5,23 +5,122 @@
 @endsection
 
 @section('content')
-<ul class="nav nav-tabs">
-    @foreach ($data['categories'] as $categorie)
-        <li><a data-toggle="tab" href="#{{$categorie->name}}">{{$categorie->name}}</a></li>
-    @endforeach
-</ul>
 
-<div class="col-lg-9">
+    <div class="row m-2">
+        <div class="col-sm-12 col-md-8 col-lg-8">
+            <div class="row">
+                <div class="btn-group p-2" role="group" aria-label="Basic example">
+                    @foreach ($data['categories'] as $categorie)
+                        <button id="{{$categorie->name}}Button" type="button" class="btn btn-light">{{$categorie->name}}</button>
+                    @endforeach
+                </div>
+            </div>
+            <div id="ingredients" class="row"></div>
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-4">
+            <h2>Vos ingrédients</h2>
+            <form action="{{url('findCocktail')}}" method="get" id="cocktailForm">
+                <ul class="list-group">
+                    <!-- TODO - foreach selected ingredients -->
+                    <!-- <li class="list-group-item">Citron</li> -->
+                </ul>
+                <button class="btn btn-primary" id="btnFindCocktail">Trouver des cocktails</button>
+            </form>
+        </div>
+    </div>
+
+@endsection
+
+@section('script')
+
+    <script type="text/javascript">
+    let ingredients = [];
+    showOrHideFindButton();
+
+    $('#ingredients').on('click', '.btnIngredient', function (e){
+        let ingredient = e.target;
+        let id = ingredient.value;
+        if (!ingredients.includes(id))
+        {
+            ingredients.push(id);
+            $('.list-group').append("<li class='list-group-item' value='" + id +"'>" + ingredient.name + "<button value='" + id +"' class='btn btnRemoveIngredient'>&times;</button> </li>")
+            $('.list-group').append("<input type='hidden' class='hidden-item' name='ingredients[]' value='" + id + "' />");
+            showOrHideFindButton();
+        }
+    });
+
+    $('.list-group').on('click', '.btnRemoveIngredient', function (e){
+        let ingredient = e.target;
+        let id = ingredient.value;
+
+        var index = ingredients.indexOf(id);
+        if (index > -1) {
+          ingredients.splice(index, 1);
+        }
+        $(".list-group-item[value='"+id+"']").remove();
+        $(".hidden-item[value='"+id+"']").remove();
+        showOrHideFindButton();
+    });
+
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+  });
+
+    $("#btnFindCocktail").click(function(e) {
+        $("#cocktailForm").submit();
+    });
+
+    function showOrHideFindButton()
+    {
+        if (ingredients.length > 0)
+            $("#btnFindCocktail").show();
+        else
+            $("#btnFindCocktail").hide();
+    }
+    </script>
 
     @foreach ($data['categories'] as $key => $categorie)
-        <div id="{{$categorie->name}}" class="tab-pane fade">
-            @foreach($data['ingredients'][$key] as $ingredient)
-                <div>
-                    {{$ingredient->name}}
-                </div>
-            @endforeach
-        </div>
+        <script type="text/javascript">
+            $('#{{$categorie->name}}Button').click(function()
+            {
+                $.get("{{ URL::to('read-data') }}", function(data)
+                {
+                    $('#ingredients').html("");
+                    $.each(data.ingredients[{{$key}}], function(i, value)
+                    {
+                        var tr = $([
+                        "<div class='col-sm-12 col-md-6 col-lg-4 p-2'>",
+                        "  <div class='card'>",
+                        "    <img class='card-img-top p-1' src='uploads/", value.name, ".jpg'>",
+                        "    <div class='card-body'>",
+                        "      <h5 class='card-title'>",
+                            value.name,
+                        "      </h5>",
+                        "      <button name='" + value.name + "' value='", value.id, "' class='btn btn-primary btnIngredient'>Ajouter</button>",
+                        "    </div>",
+                        "  </div>",
+                        "</div>"
+                        ].join("\n"));
+                        $('#ingredients').append(tr);
+                    })
+                })
+            });
+        </script>
     @endforeach
-</div>
+
+    <script type="text/javascript">
+    function eventFire(el, etype){
+      if (el.fireEvent) {
+        el.fireEvent('on' + etype);
+      } else {
+        var evObj = document.createEvent('Events');
+        evObj.initEvent(etype, true, false);
+        el.dispatchEvent(evObj);
+      }
+    }
+    eventFire(document.getElementById('{{$data['categories'][0]->name}}Button'), 'click');
+    </script>
 
 @endsection
