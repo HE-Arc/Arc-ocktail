@@ -39,4 +39,9 @@ class HomeController extends Controller
 
       return response($data);
     }
+
+    public function searchIngredients(Request $request)
+    {
+      return DB::table('ingredients')->where('name', 'like', '%'.$request->input("ingredient").'%')->get();
+    }
 }

@@ -13,6 +13,10 @@
                     @foreach ($data['categories'] as $categorie)
                         <button id="{{$categorie->name}}Button" type="button" class="btn btn-light">{{$categorie->name}}</button>
                     @endforeach
+                    <!-- TODO - select a suitable place for the search and replace it's CSS -->
+                    <label style="margin-top:4px; margin-left:58px;">Recherche</label>
+                    <input id="search" type="text" style="margin-top:4px; margin-left:10px; height: 80%"></input>
+                    <!-- -->
                 </div>
             </div>
             <div id="ingredients" class="row"></div>
@@ -36,6 +40,43 @@
     <script type="text/javascript">
     let ingredients = [];
     showOrHideFindButton();
+
+    $("#search").on("change paste keyup", function() {
+        if ($("#search").val() != "")
+        {
+            $.ajax({
+                url: "{{ URL::to('search-ingredients') }}",
+                type: 'GET',
+                data: 'ingredient=' + $("#search").val(),
+                dataType: 'JSON',
+                success: function (data) {
+                  $('#ingredients').html("");
+                  $.each(data, function(i, value)
+                  {
+                      var tr = $([
+                      "<div class='col-sm-12 col-md-6 col-lg-4 p-2'>",
+                      "  <div class='card'>",
+                      "    <img class='card-img-top p-1' src='uploads/", value.name, ".jpg'>",
+                      "    <div class='card-body'>",
+                      "      <h5 class='card-title'>",
+                          value.name,
+                      "      </h5>",
+                      "      <button name='" + value.name + "' value='", value.id, "' class='btn btn-primary btnIngredient'>Ajouter</button>",
+                      "    </div>",
+                      "  </div>",
+                      "</div>"
+                      ].join("\n"));
+                      $('#ingredients').append(tr);
+                  })
+                },
+                error: function (e) {
+                    console.log(e.responseText);
+                }
+            });
+        } else {
+            $('#ingredients').html("");
+        }
+    });
 
     $('#ingredients').on('click', '.btnIngredient', function (e){
         let ingredient = e.target;
