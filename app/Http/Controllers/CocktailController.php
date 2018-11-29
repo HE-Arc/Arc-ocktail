@@ -66,8 +66,6 @@ class CocktailController extends Controller
             ->groupBy('cocktail_id')
             ->get();
             //->pluck('cocktail_id', 'ingredient_id');
-        // TODO ingredients contains the id of the ingredient, must return the possible cocktail
-        //$possibleCocktails = [1, 2, 3];
 
         $this->fillIngredient($possibleCocktails);
         $this->setPercentageList($possibleCocktails, $ingredients);

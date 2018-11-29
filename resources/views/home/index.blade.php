@@ -43,11 +43,15 @@
         if (!ingredients.includes(id))
         {
             ingredients.push(id);
-            $('.list-group').append("<li class='list-group-item' value='" + id +"'>" + ingredient.name + "<button value='" + id +"' class='btn btnRemoveIngredient'>&times;</button> </li>")
+            $('.list-group').append("<li class='list-group-item' value='" + encodeHTML(id) +"'>" + encodeHTML(ingredient.name) + "<button value='" + encodeHTML(id) +"' class='btn btnRemoveIngredient'>&times;</button> </li>")
             $('.list-group').append("<input type='hidden' class='hidden-item' name='ingredients[]' value='" + id + "' />");
             showOrHideFindButton();
         }
     });
+
+    function encodeHTML(s) {
+        return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;').replace(/"/g, '&quot;');
+    }
 
     $('.list-group').on('click', '.btnRemoveIngredient', function (e){
         let ingredient = e.target;
