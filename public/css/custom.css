@@ -1,7 +1,16 @@
-[class*="col-"] {
-  background-color: lightgrey;
-  border: 1px solid black;
-  border-radius: 5px;
-  line-height: 40px;
-  text-align: center;
+
+
+
+.banner
+{
+    background-size: auto;
+    background-position: top;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+}
+
+.blur
+{
+    filter: blur(5px);
 }

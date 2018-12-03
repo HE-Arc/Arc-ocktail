@@ -11,20 +11,17 @@
             <div class="row">
                 <div class="btn-group p-2" role="group" aria-label="Basic example">
                     @foreach ($data['categories'] as $categorie)
-                        <button id="{{$categorie->name}}Button" type="button" class="btn btn-light">{{$categorie->name}}</button>
+                        <button id="{{$categorie->name}}Button" type="button" class="btn btn-lg btn-dark">{{$categorie->name}}</button>
                     @endforeach
                 </div>
             </div>
             <div id="ingredients" class="row"></div>
         </div>
         <div class="col-sm-12 col-md-4 col-lg-4">
-            <h2>Vos ingrédients</h2>
+            <h2 class="p-2">Vos ingrédients</h2>
             <form action="{{url('findCocktail')}}" method="get" id="cocktailForm">
-                <ul class="list-group">
-                    <!-- TODO - foreach selected ingredients -->
-                    <!-- <li class="list-group-item">Citron</li> -->
-                </ul>
-                <button class="btn btn-primary" id="btnFindCocktail">Trouver des cocktails</button>
+                <ul class="list-group"></ul>
+                <button class="btn btn-success btn-lg w-100 mt-3" id="btnFindCocktail">Trouver des cocktails</button>
             </form>
         </div>
     </div>
@@ -43,7 +40,7 @@
         if (!ingredients.includes(id))
         {
             ingredients.push(id);
-            $('.list-group').append("<li class='list-group-item' value='" + encodeHTML(id) +"'>" + encodeHTML(ingredient.name) + "<button value='" + encodeHTML(id) +"' class='btn btnRemoveIngredient'>&times;</button> </li>")
+            $('.list-group').append("<li class='list-group-item p-2' value='" + encodeHTML(id) +"'><span class=''>" + encodeHTML(ingredient.name) + "</span><button value='" + encodeHTML(id) +"' class='close btnRemoveIngredient'>&times;</button></li>");
             $('.list-group').append("<input type='hidden' class='hidden-item' name='ingredients[]' value='" + id + "' />");
             showOrHideFindButton();
         }
@@ -98,11 +95,11 @@
                         "<div class='col-sm-12 col-md-6 col-lg-4 p-2'>",
                         "  <div class='card'>",
                         "    <img class='card-img-top p-1' src='uploads/", value.name, ".jpg'>",
-                        "    <div class='card-body'>",
+                        "    <div class='card-body p-3'>",
                         "      <h5 class='card-title'>",
                             value.name,
                         "      </h5>",
-                        "      <button name='" + value.name + "' value='", value.id, "' class='btn btn-primary btnIngredient'>Ajouter</button>",
+                        "      <button name='" + value.name + "' value='", value.id, "' class='btn btn-primary btnIngredient w-100'>Ajouter</button>",
                         "    </div>",
                         "  </div>",
                         "</div>"
