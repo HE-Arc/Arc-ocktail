@@ -14,8 +14,7 @@
                         <button id="{{$categorie->name}}Button" type="button" class="btn btn-lg btn-dark">{{$categorie->name}}</button>
                     @endforeach
                     <!-- TODO - select a suitable place for the search and replace it's CSS -->
-                    <label style="margin-top:4px; margin-left:58px;">Recherche</label>
-                    <input id="search" type="text" style="margin-top:4px; margin-left:10px; height: 80%"></input>
+                    <input id="search" type="text" value="Rechercher..." style="margin-left:30px; height: 100%;"></input>
                     <!-- -->
                 </div>
             </div>
@@ -38,6 +37,9 @@
     let ingredients = [];
     showOrHideFindButton();
 
+    $("#search").focus(function() {
+      $("#search").val("");
+    });
     $("#search").on("change paste keyup", function() {
         if ($("#search").val() != "")
         {
