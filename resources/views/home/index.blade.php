@@ -14,7 +14,7 @@
                         <button id="{{$categorie->name}}Button" type="button" class="btn btn-lg btn-dark">{{$categorie->name}}</button>
                     @endforeach
                     <!-- TODO - select a suitable place for the search and replace it's CSS -->
-                    <input id="search" type="text" value="Rechercher..." style="margin-left:30px; height: 100%;"></input>
+                    <input id="search" type="text" value=" Rechercher..." style="margin-left:30px; height: 100%;"></input>
                     <!-- -->
                 </div>
             </div>
