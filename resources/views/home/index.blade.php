@@ -125,31 +125,41 @@
     }
     </script>
 
+    <!-- Load all ingredients from a category on it's selection -->
     @foreach ($data['categories'] as $key => $categorie)
         <script type="text/javascript">
             $('#{{$categorie->name}}Button').click(function()
             {
-                $.get("{{ URL::to('read-data') }}", function(data)
-                {
-                    $('#ingredients').html("");
-                    $.each(data.ingredients[{{$key}}], function(i, value)
-                    {
-                        var tr = $([
-                        "<div class='col-sm-12 col-md-6 col-lg-4 p-2'>",
-                        "  <div class='card'>",
-                        "    <img class='card-img-top p-1' src='uploads/", value.name, ".jpg'>",
-                        "    <div class='card-body p-3'>",
-                        "      <h5 class='card-title'>",
-                            value.name,
-                        "      </h5>",
-                        "      <button name='" + value.name + "' value='", value.id, "' class='btn btn-primary btnIngredient w-100'>Ajouter</button>",
-                        "    </div>",
-                        "  </div>",
-                        "</div>"
-                        ].join("\n"));
-                        $('#ingredients').append(tr);
-                    })
-                })
+                $.ajax({
+                    url: "{{ URL::to('read-ingredients-from-category') }}",
+                    type: 'GET',
+                    data: 'categorie=' + "{{$categorie->name}}",
+                    dataType: 'JSON',
+                    success: function (data) {
+                      console.log(data);
+                      $('#ingredients').html("");
+                      $.each(data, function(i, value)
+                      {
+                          var tr = $([
+                          "<div class='col-sm-12 col-md-6 col-lg-4 p-2'>",
+                          "  <div class='card'>",
+                          "    <img class='card-img-top p-1' src='uploads/", value.name, ".jpg'>",
+                          "    <div class='card-body'>",
+                          "      <h5 class='card-title'>",
+                              value.name,
+                          "      </h5>",
+                          "      <button name='" + value.name + "' value='", value.id, "' class='btn btn-primary btnIngredient'>Ajouter</button>",
+                          "    </div>",
+                          "  </div>",
+                          "</div>"
+                          ].join("\n"));
+                          $('#ingredients').append(tr);
+                      })
+                    },
+                    error: function (e) {
+                        console.log(e.responseText);
+                    }
+                });
             });
         </script>
     @endforeach
