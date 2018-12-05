@@ -20,12 +20,14 @@
             </div>
             <div id="ingredients" class="row"></div>
         </div>
-        <div class="col-sm-12 col-md-4 col-lg-4">
-            <h2 class="p-2">Vos ingrédients</h2>
-            <form action="{{url('findCocktail')}}" method="get" id="cocktailForm">
-                <ul class="list-group"></ul>
-                <button class="btn btn-success btn-lg w-100 mt-3" id="btnFindCocktail">Trouver des cocktails</button>
-            </form>
+        <div class="sticky-top col-sm-12 col-md-4 col-lg-4">
+            <div class="sticky-top">
+                <h2 class="p-2">Vos ingrédients</h2>
+                <form action="{{url('findCocktail')}}" method="get" id="cocktailForm">
+                    <button class="btn btn-success btn-lg w-100 mt-2 mb-3" id="btnFindCocktail">Trouver des cocktails</button>
+                    <ul class="list-group"></ul>
+                </form>
+            </div>
         </div>
     </div>
 
