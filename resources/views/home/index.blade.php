@@ -22,7 +22,13 @@
         </div>
         <div class="sticky-top col-sm-12 col-md-4 col-lg-4">
             <div class="sticky-top">
-                <h2 class="p-2">Vos ingrédients</h2>
+                <h2 class="col-12 pt-3 text-center">Vos ingrédients</h2>
+                <div id="emptyCart">
+                  <img src="uploads/cart.png" class="col-6 offset-3 mt-5" style="opacity: 0.3">
+                  <div class="col-12 mt-1 text-center">
+                    <p>Aucun ingrédient sélectionné</p>
+                  </div>
+                </div>
                 <form action="{{url('findCocktail')}}" method="get" id="cocktailForm">
                     <button class="btn btn-success btn-lg w-100 mt-2 mb-3" id="btnFindCocktail">Trouver des cocktails</button>
                     <ul class="list-group"></ul>
@@ -39,6 +45,7 @@
     let ingredients = [];
     showOrHideFindButton();
 
+    // Search option for the ingredients
     $("#search").focus(function() {
       $("#search").val("");
     });
@@ -120,10 +127,13 @@
 
     function showOrHideFindButton()
     {
-        if (ingredients.length > 0)
+        if (ingredients.length > 0) {
             $("#btnFindCocktail").show();
-        else
+            $("#emptyCart").hide();
+        } else {
             $("#btnFindCocktail").hide();
+            $("#emptyCart").show();
+        }
     }
     </script>
 
@@ -138,7 +148,6 @@
                     data: 'categorie=' + "{{$categorie->name}}",
                     dataType: 'JSON',
                     success: function (data) {
-                      console.log(data);
                       $('#ingredients').html("");
                       $.each(data, function(i, value)
                       {
