@@ -35,13 +35,15 @@
             </div>
         </nav>
 
-        <div class="container border rounded p-0 mt-3 bg-light">
-            @yield('content')
-            @yield('script')
+        <div class="container p-3">
+            <div class="border rounded bg-light">
+                @yield('content')
+                @yield('script')
+            </div>
         </div>
 
-        <footer class="row">
+        <!-- <footer class="row">
             <div class="col-md-12">Pied de page</div>
-        </footer>
+        </footer> -->
     </body>
 </html>

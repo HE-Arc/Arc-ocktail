@@ -9,14 +9,14 @@
     <div class="row m-2">
         <div class="col-sm-12 col-md-8 col-lg-8">
             <div class="row">
-                <div class="btn-group p-2" role="group" aria-label="Basic example">
+                <div class="btn-group p-2 col-12" role="group" aria-label="Basic example">
                     @foreach ($data['categories'] as $categorie)
                         <button id="{{$categorie->name}}Button" type="button" class="btn btn-lg btn-dark">{{$categorie->name}}</button>
                     @endforeach
-                    <!-- TODO - select a suitable place for the search and replace it's CSS -->
-                    <input id="search" type="text" value="Rechercher..." style="margin-left:30px; height: 100%;"></input>
-                    <!-- -->
                 </div>
+                <!-- TODO - select a suitable place for the search and replace it's CSS -->
+                <input id="search" type="text" placeholder="Rechercher..." class="m-2 form-control"></input>
+                <!-- -->
             </div>
             <div id="ingredients" class="row"></div>
         </div>
