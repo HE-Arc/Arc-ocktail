@@ -30,7 +30,7 @@
                   </div>
                 </div>
                 <form action="{{url('findCocktail')}}" method="get" id="cocktailForm">
-                    <button class="btn btn-success btn-lg w-100 mt-2 mb-3" id="btnFindCocktail">Trouver des cocktails</button>
+                    <button class="btn btn-info btn-lg w-100 mt-2 mb-3" id="btnFindCocktail">Trouver des cocktails</button>
                     <ul class="list-group"></ul>
                 </form>
             </div>
@@ -69,7 +69,7 @@
                       "      <h5 class='card-title'>",
                           value.name,
                       "      </h5>",
-                      "      <button name='" + value.name + "' value='", value.id, "' class='btn btn-primary btnIngredient'>Ajouter</button>",
+                      "      <button id='" + value.name.replace(/\s+/g, '') + "' name='" + value.name + "' value='", value.id, "' class='btn btn-info btnIngredient w-100'>Ajouter</button>",
                       "    </div>",
                       "  </div>",
                       "</div>"
@@ -89,10 +89,11 @@
     $('#ingredients').on('click', '.btnIngredient', function (e){
         let ingredient = e.target;
         let id = ingredient.value;
+        $("#" + ingredient.name.replace(/\s+/g, '')).prop("disabled",true);
         if (!ingredients.includes(id))
         {
             ingredients.push(id);
-            $('.list-group').append("<li class='list-group-item p-2' value='" + encodeHTML(id) +"'><span class=''>" + encodeHTML(ingredient.name) + "</span><button value='" + encodeHTML(id) +"' class='close btnRemoveIngredient'>&times;</button></li>");
+            $('.list-group').append("<li class='list-group-item p-2' value='" + encodeHTML(id) +"'><span class=''>" + encodeHTML(ingredient.name) + "</span><button name='" + ingredient.name + "' value='" + encodeHTML(id) +"' class='close btnRemoveIngredient'>&times;</button></li>");
             $('.list-group').append("<input type='hidden' class='hidden-item' name='ingredients[]' value='" + id + "' />");
             showOrHideFindButton();
         }
@@ -113,6 +114,7 @@
         $(".list-group-item[value='"+id+"']").remove();
         $(".hidden-item[value='"+id+"']").remove();
         showOrHideFindButton();
+        $("#" + ingredient.name.replace(/\s+/g, '')).prop("disabled",false);
     });
 
     $.ajaxSetup({
@@ -159,7 +161,7 @@
                           "      <h5 class='card-title'>",
                               value.name,
                           "      </h5>",
-                          "      <button name='" + value.name + "' value='", value.id, "' class='btn btn-primary btnIngredient'>Ajouter</button>",
+                          "      <button id='" + value.name.replace(/\s+/g, '') + "' name='" + value.name + "' value='", value.id, "' class='btn btn-info btnIngredient w-100'>Ajouter</button>",
                           "    </div>",
                           "  </div>",
                           "</div>"
