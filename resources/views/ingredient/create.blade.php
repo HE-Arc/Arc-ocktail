@@ -19,109 +19,82 @@ $(document).ready(function(){
                       _token: '{{csrf_token()}}',
                      categorieName: $('#categorieName').val()
                   },
-                  success: function(result){
-                  	if(result.errors)
-                  	{
-                  		$('.alert-danger').html('');
-                        $('.alert-success').hide();
-                  		$.each(result.errors, function(key, value){
-                  			$('.alert-danger').show();
-                  			$('.alert-danger').append('<li>'+value+'</li>');
-                  		});
-                  	}
-                  	else
-                  	{
-                        $('.alert-danger').hide();
-              			$('.alert-success').show();
-              			$('.alert-success').append('<li>'+result.success+'</li>');
-                        setTimeout(function() {
-                            $(".alert-success").alert('close');
-                        }, 2000);
-                  	}
-                  }});
+                  success: function(data){
+                      if(data.error){
+                      printErrorMsg(data.error);
+                      }else{
+                          $('#addCategorieForm')[0].reset();
+                          $(".print-success-msg").find("ul").html('');
+                          $(".print-success-msg").css('display','block');
+                          $(".print-error-msg").css('display','none');
+                          $(".print-success-msg").find("ul").append('<li>Record Inserted Successfully.</li>');
+                      }}
+                  });
                });
+
+               $('#unitSubmit').click(function(e){
+                  e.preventDefault();
+
+                  $.ajax({
+                     url: "{{ url('/ingredient') }}",
+                     method: 'post',
+                     data: {
+                         _token: '{{csrf_token()}}',
+                        unitName: $('#unitName').val()
+                     },
+                     success: function(data){
+                         if(data.error){
+                         printErrorMsg(data.error);
+                         }else{
+                             $('#addUnitForm')[0].reset();
+                             $(".print-success-msg").find("ul").html('');
+                             $(".print-success-msg").css('display','block');
+                             $(".print-error-msg").css('display','none');
+                             $(".print-success-msg").find("ul").append('<li>Record Inserted Successfully.</li>');
+                         }}
+                 });
+                  });
+
+                  $('#ingredientSubmit').click(function(e){
+                     e.preventDefault();
+                     var fd = new FormData();
+                     fd.append('image', $("#image").get(0).files[0]);
+                     fd.append('_token', "{{csrf_token()}}");
+                     fd.append('ingredientName', $('#ingredientName').val());
+                     fd.append('alcoholDegree', $('#alcoholDegree').val());
+                     fd.append('categorie', $('#categorieId').val());
+                     fd.append('unit', $('#unitId').val());
+                     $.ajax({
+                        url: "{{ url('/ingredient') }}",
+                        method: 'post',
+                        data: fd,
+                        cache : false,
+                        processData: false,
+                        contentType: false,
+                        success: function(data){
+                            if(data.error){
+                            printErrorMsg(data.error);
+                            }else{
+                                $('#addIngredientForm')[0].reset();
+                                $(".print-success-msg").find("ul").html('');
+                                $(".print-success-msg").css('display','block');
+                                $(".print-error-msg").css('display','none');
+                                $(".print-success-msg").find("ul").append('<li>Record Inserted Successfully.</li>');
+                            }}
+                     });
+                 });
+
+                     function printErrorMsg (msg) {
+                      $(".print-error-msg").find("ul").html('');
+                      $(".print-error-msg").css('display','block');
+                      $(".print-success-msg").css('display','none');
+                      $.each( msg, function( key, value ) {
+                         $(".print-error-msg").find("ul").append('<li>'+value+'</li>');
+                      });
+                   }
             });
 </script>
 
-<!-- Script for sending with ajax the categorie form -->
-<script>
-$(document).ready(function(){
-            $('#unitSubmit').click(function(e){
-               e.preventDefault();
-
-               $.ajax({
-                  url: "{{ url('/ingredient') }}",
-                  method: 'post',
-                  data: {
-                      _token: '{{csrf_token()}}',
-                     unitName: $('#unitName').val()
-                  },
-                  success: function(result){
-                  	if(result.errors)
-                  	{
-                  		$('.alert-danger').html('');
-                        $('.alert-success').hide();
-                  		$.each(result.errors, function(key, value){
-                  			$('.alert-danger').show();
-                  			$('.alert-danger').append('<li>'+value+'</li>');
-                  		});
-                  	}
-                  	else
-                  	{
-                        $('.alert-danger').hide();
-              			$('.alert-success').show();
-              			$('.alert-success').append('<li>'+result.success+'</li>');
-                        setTimeout(function() {
-                            $(".alert-success").alert('close');
-                        }, 2000);
-                  	}
-                  }});
-               });
-            });
-</script>
-
-<!-- Script for sending with ajax the ingredient form -->
-<script>
-$(document).ready(function(){
-            $('#ingredientSubmit').click(function(e){
-               e.preventDefault();
-               var fd = new FormData();
-               fd.append('image', $("#image").get(0).files[0]);
-               fd.append('_token', "{{csrf_token()}}");
-               fd.append('ingredientName', $('#ingredientName').val());
-               fd.append('alcoholDegree', $('#alcoholDegree').val());
-               fd.append('categorie', $('#categorieId').val());
-               fd.append('unit', $('#unitId').val());
-               $.ajax({
-                  url: "{{ url('/ingredient') }}",
-                  method: 'post',
-                  data: fd,
-                  cache : false,
-                  processData: false,
-                  contentType: false,
-                  success: function(result){
-                  	if(result.errors)
-                  	{
-                  		$('.alert-danger').html('');
-                        $('.alert-success').hide();
-                  		$.each(result.errors, function(key, value){
-                  			$('.alert-danger').show();
-                  			$('.alert-danger').append('<li>'+value+'</li>');
-                  		});
-                  	}
-                  	else
-                  	{
-                        $('.alert-danger').hide();
-              			$('.alert-success').show();
-              			$('.alert-success').append('<li>'+result.success+'</li>');
-                        setTimeout(function() {
-                            $(".alert-success").alert('close');
-                        }, 2000);
-                  	}
-                  }});
-               });
-            });
-</script>
 @endpush
 
 @section('content')
@@ -137,8 +110,13 @@ $(document).ready(function(){
 <div class="modal fade" id="addCategorie" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-        <div class="alert alert-danger" style="display:none"></div>
-        <div class="alert alert-success" style="display:none"></div>
+        <div class="alert alert-danger print-error-msg" style="display:none">
+        <ul></ul>
+        </div>
+
+        <div class="alert alert-success print-success-msg" style="display:none">
+        <ul></ul>
+        </div>
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Ajouter une catégorie</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -172,8 +150,13 @@ $(document).ready(function(){
 <div class="modal fade" id="addUnit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-        <div class="alert alert-danger" style="display:none"></div>
-        <div class="alert alert-success" style="display:none"></div>
+        <div class="alert alert-danger print-error-msg" style="display:none">
+        <ul></ul>
+        </div>
+
+        <div class="alert alert-success print-success-msg" style="display:none">
+        <ul></ul>
+        </div>
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Ajouter une unité</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -207,8 +190,13 @@ $(document).ready(function(){
 <div class="modal fade" id="addIngredient" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-        <div class="alert alert-danger" style="display:none"></div>
-        <div class="alert alert-success" style="display:none"></div>
+        <div class="alert alert-danger print-error-msg" style="display:none">
+        <ul></ul>
+        </div>
+
+        <div class="alert alert-success print-success-msg" style="display:none">
+        <ul></ul>
+        </div>
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Ajouter un ingrédient</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">

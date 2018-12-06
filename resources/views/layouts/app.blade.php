@@ -5,7 +5,7 @@
 
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-        <!-- <link href="{{ asset('css/custom.css') }}" rel="stylesheet" type="text/css" >-->
+        <link href="{{ asset('css/custom.css') }}" rel="stylesheet" type="text/css" >
 
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -16,7 +16,7 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="{{url('/')}}">
                     <img src="{{ asset('icons/logo.png') }}" width="30" height="30" class="d-inline-block align-top" alt="">
                     Arc'ocktail
                 </a>
@@ -35,7 +35,7 @@
             </div>
         </nav>
 
-        <div class="container border rounded mt-3 p-3">
+        <div class="container border rounded p-0 mt-3 bg-light">
             @yield('content')
             @yield('script')
         </div>

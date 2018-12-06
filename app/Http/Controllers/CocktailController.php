@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use App\Ingredient;
 use App\Cocktail;
 use App\Quantity;
@@ -11,10 +12,6 @@ use Validator;
 
 class CocktailController extends Controller
 {
-    public function index()
-    {
-
-    }
 
     public function create()
     {
@@ -57,5 +54,61 @@ class CocktailController extends Controller
             return response()->json(['success'=>'Entry successfully added']);
         }
         return response()->json(['error'=>$validator->errors()->all()]);
+    }
+
+    public function findCocktail()
+    {
+        $ingredients = Input::get('ingredients');
+        $possibleCocktails = DB::table('cocktails')
+            ->join('quantities', 'quantities.cocktail_id', '=', 'cocktails.id')
+            ->whereIn('ingredient_id', $ingredients)
+            ->select('cocktail_id', 'name')
+            ->groupBy('cocktail_id')
+            ->get();
+            //->pluck('cocktail_id', 'ingredient_id');
+
+        $this->fillIngredient($possibleCocktails);
+        $this->setPercentageList($possibleCocktails, $ingredients);
+        $possibleCocktails = $possibleCocktails->sortByDesc('percentage');
+
+        return view("cocktail.showcocktails", ["cocktails"=> $possibleCocktails]);
+    }
+
+    private function fillIngredient($possibleCocktails)
+    {
+        foreach($possibleCocktails as $cocktail)
+        {
+            $cocktail->ingredients = DB::table('quantities')
+                ->select('ingredient_id')
+                ->where('cocktail_id', $cocktail->cocktail_id)
+                ->pluck('ingredient_id')->toArray();
+        }
+    }
+
+    private function setPercentageList($possibleCocktails, $ingredients)
+    {
+        foreach($possibleCocktails as $cocktail)
+        {
+            $nbrIngredient = 0;
+            foreach($cocktail->ingredients as $ingredient)
+            {
+                if (in_array($ingredient, $ingredients))
+                    $nbrIngredient++;
+            }
+            $cocktail->percentage = round($nbrIngredient / count($cocktail->ingredients), 2);
+        }
+    }
+
+    public function show($id)
+    {
+        $cocktail = DB::table('cocktails')->where('id', $id)->first();
+        $ingredients = DB::table('quantities')
+            ->join('ingredients', 'quantities.ingredient_id', '=', 'ingredients.id')
+            ->join('units', 'ingredients.unit_id', '=', 'units.id')
+            ->select('ingredients.name', 'quantities.quantity', 'units.unit', 'quantities.cocktail_id')
+            ->where('cocktail_id', $id)
+            ->get();
+
+        return view("cocktail.show", ["cocktail" => $cocktail, "ingredients" => $ingredients]);
     }
 }
