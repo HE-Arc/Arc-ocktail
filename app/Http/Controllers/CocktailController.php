@@ -58,18 +58,31 @@ class CocktailController extends Controller
 
     public function findCocktail()
     {
+        $order = Input::get('orderby');
+        $direction = Input::get('direction');
         $ingredients = Input::get('ingredients');
         $possibleCocktails = DB::table('cocktails')
             ->join('quantities', 'quantities.cocktail_id', '=', 'cocktails.id')
             ->whereIn('ingredient_id', $ingredients)
-            ->select('cocktail_id', 'name')
+            ->select('cocktail_id', 'name', 'alcohol_degree')
             ->groupBy('cocktail_id')
             ->get();
             //->pluck('cocktail_id', 'ingredient_id');
 
         $this->fillIngredient($possibleCocktails);
         $this->setPercentageList($possibleCocktails, $ingredients);
-        $possibleCocktails = $possibleCocktails->sortByDesc('percentage');
+
+        if (is_null($direction))
+            $direction = "desc";
+
+        if (is_null($order))
+            $order = "percentage";
+
+        if ($direction === "asc")
+            $possibleCocktails = $possibleCocktails->sortBy($order);
+        else {
+            $possibleCocktails = $possibleCocktails->sortByDesc($order);
+        }
 
         return view("cocktail.showcocktails", ["cocktails"=> $possibleCocktails]);
     }
