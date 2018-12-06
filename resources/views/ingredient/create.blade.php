@@ -99,155 +99,154 @@ $(document).ready(function(){
 
 @section('content')
 
-<!-- Button and form to add a categorie-->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCategorie">
-  Ajouter une catégorie
-</button>
+<div class="row m-2">
+    <!-- Button and form to add a categorie-->
+    <div class="p-0 col-lg-4 col-md-6 col-sm-12 m-2">
+        <button type="button" class="btn btn-primary btn-lg w-100 m-0" data-toggle="modal" data-target="#addCategorie">Ajouter une catégorie</button>
+    </div>
+    <form method="post" action="{{url('ingredient')}}" id="addCategorieForm">
+            @csrf
 
-<form method="post" action="{{url('ingredient')}}" id="addCategorieForm">
-        @csrf
+    <div class="modal fade" id="addCategorie" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="alert alert-danger print-error-msg" style="display:none">
+            <ul></ul>
+            </div>
 
-<div class="modal fade" id="addCategorie" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="alert alert-danger print-error-msg" style="display:none">
-        <ul></ul>
-        </div>
-
-        <div class="alert alert-success print-success-msg" style="display:none">
-        <ul></ul>
-        </div>
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Ajouter une catégorie</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-          <div class="row">
-                <label for="Name">Nom de la catégorie:</label>
-                <input type="text" class="form-control" name="categorieName" id="categorieName">
+            <div class="alert alert-success print-success-msg" style="display:none">
+            <ul></ul>
+            </div>
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ajouter une catégorie</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
+          <div class="modal-body">
+              <div class="row">
+                    <label for="Name">Nom de la catégorie:</label>
+                    <input type="text" class="form-control" name="categorieName" id="categorieName">
+              </div>
+          </div>
+          <div class="modal-footer">
+          	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button  class="btn btn-success" id="categorieSubmit">Save changes</button>
+        </div>
+        </div>
       </div>
-      <div class="modal-footer">
-      	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button  class="btn btn-success" id="categorieSubmit">Save changes</button>
     </div>
+    </form>
+
+
+    <!-- Button and form to add a unit-->
+    <div class="p-0 col-lg-4 col-md-6 col-sm-12 m-2">
+        <button type="button" class="btn btn-primary btn-lg w-100 m-0" data-toggle="modal" data-target="#addUnit">Ajouter une unité</button>
     </div>
-  </div>
+    <form method="post" action="{{url('ingredient')}}" id="addUnitForm">
+            @csrf
+
+    <div class="modal fade" id="addUnit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="alert alert-danger print-error-msg" style="display:none">
+            <ul></ul>
+            </div>
+
+            <div class="alert alert-success print-success-msg" style="display:none">
+            <ul></ul>
+            </div>
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ajouter une unité</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <div class="row">
+                    <label for="Name">Nom de l'unité:</label>
+                    <input type="text" class="form-control" name="unitName" id="unitName">
+              </div>
+          </div>
+          <div class="modal-footer">
+          	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button  class="btn btn-success" id="unitSubmit">Save changes</button>
+        </div>
+        </div>
+      </div>
+    </div>
+    </form>
+
+
+    <!-- Button and form to add an ingredient-->
+    <div class="p-0 col-lg-4 col-md-6 col-sm-12 m-2">
+        <button type="button" class="btn btn-primary btn-lg w-100 m-0" data-toggle="modal" data-target="#addIngredient">Ajouter un ingrédient</button>
+    </div>
+    <form method="post" action="{{url('ingredient')}}" id="addIngredientForm" enctype="multipart/form-data">
+            @csrf
+
+    <div class="modal fade" id="addIngredient" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="alert alert-danger print-error-msg" style="display:none">
+            <ul></ul>
+            </div>
+
+            <div class="alert alert-success print-success-msg" style="display:none">
+            <ul></ul>
+            </div>
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ajouter un ingrédient</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <div class="row">
+                    <label for="Name">Nom de l'ingrédient :</label>
+                    <input type="text" class="form-control" name="ingredientName" id="ingredientName">
+              </div>
+
+              <div class="row">
+                    <label for="Name">Degré d'alcool :</label>
+                    <input type="number" class="form-control" name="alcoholDegree" id="alcoholDegree">
+              </div>
+
+              <div class="row">
+                    <label for="Name">Catégorie :</label>
+                    <select name="categorieId" id="categorieId">
+                    @foreach($data["categories"] as $categorie)
+                        <option value="{{ $categorie->id }}">
+                            {{ $categorie->name }}
+                        </option>
+                    @endforeach
+                    </select>
+              </div>
+
+              <div class="row">
+                    <label for="Name">Unité :</label>
+                    <select name="unit" id="unitId">
+                    @foreach($data["units"] as $unit)
+                        <option value="{{ $unit->id }}">
+                            {{ $unit->unit }}
+                        </option>
+                    @endforeach
+                    </select>
+              </div>
+              <div class="row">
+                    <label for="Name">Image :</label>
+                    <input type="file" name="image" id="image">
+              </div>
+
+          </div>
+          <div class="modal-footer">
+          	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button  class="btn btn-success" id="ingredientSubmit">Save changes</button>
+        </div>
+        </div>
+      </div>
+    </div>
+    </form>
 </div>
-</form>
-
-
-<!-- Button and form to add a unit-->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addUnit">
-  Ajouter une unité
-</button>
-
-<form method="post" action="{{url('ingredient')}}" id="addUnitForm">
-        @csrf
-
-<div class="modal fade" id="addUnit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="alert alert-danger print-error-msg" style="display:none">
-        <ul></ul>
-        </div>
-
-        <div class="alert alert-success print-success-msg" style="display:none">
-        <ul></ul>
-        </div>
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Ajouter une unité</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-          <div class="row">
-                <label for="Name">Nom de l'unité:</label>
-                <input type="text" class="form-control" name="unitName" id="unitName">
-          </div>
-      </div>
-      <div class="modal-footer">
-      	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button  class="btn btn-success" id="unitSubmit">Save changes</button>
-    </div>
-    </div>
-  </div>
-</div>
-</form>
-
-
-<!-- Button and form to add an ingredient-->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addIngredient">
-  Ajouter un ingrédient
-</button>
-
-<form method="post" action="{{url('ingredient')}}" id="addIngredientForm" enctype="multipart/form-data">
-        @csrf
-
-<div class="modal fade" id="addIngredient" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="alert alert-danger print-error-msg" style="display:none">
-        <ul></ul>
-        </div>
-
-        <div class="alert alert-success print-success-msg" style="display:none">
-        <ul></ul>
-        </div>
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Ajouter un ingrédient</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-          <div class="row">
-                <label for="Name">Nom de l'ingrédient :</label>
-                <input type="text" class="form-control" name="ingredientName" id="ingredientName">
-          </div>
-
-          <div class="row">
-                <label for="Name">Degré d'alcool :</label>
-                <input type="number" class="form-control" name="alcoholDegree" id="alcoholDegree">
-          </div>
-
-          <div class="row">
-                <label for="Name">Catégorie :</label>
-                <select name="categorieId" id="categorieId">
-                @foreach($data["categories"] as $categorie)
-                    <option value="{{ $categorie->id }}">
-                        {{ $categorie->name }}
-                    </option>
-                @endforeach
-                </select>
-          </div>
-
-          <div class="row">
-                <label for="Name">Unité :</label>
-                <select name="unit" id="unitId">
-                @foreach($data["units"] as $unit)
-                    <option value="{{ $unit->id }}">
-                        {{ $unit->unit }}
-                    </option>
-                @endforeach
-                </select>
-          </div>
-          <div class="row">
-                <label for="Name">Image :</label>
-                <input type="file" name="image" id="image">
-          </div>
-
-      </div>
-      <div class="modal-footer">
-      	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button  class="btn btn-success" id="ingredientSubmit">Save changes</button>
-    </div>
-    </div>
-  </div>
-</div>
-</form>
 
 @endsection
