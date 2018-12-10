@@ -13,7 +13,10 @@
         @stack('head')
         <title>@yield('title')</title>
     </head>
-    <body>
+    <body style="background-image: url('uploads/background.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
                 <a class="navbar-brand" href="{{url('/')}}">
