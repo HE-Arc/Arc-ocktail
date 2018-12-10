@@ -62,14 +62,14 @@
                   $.each(data, function(i, value)
                   {
                       var tr = $([
-                      "<div class='col-sm-12 col-md-6 col-lg-4 p-2'>",
+                      "<div id='" + (value.name + "Card").replace(/\s+/g, '') + "' class='col-sm-12 col-md-6 col-lg-4 p-2'>",
                       "  <div class='card'>",
                       "    <img class='card-img-top p-1' src='uploads/", value.name, ".jpg'>",
                       "    <div class='card-body'>",
                       "      <h5 class='card-title'>",
                           value.name,
                       "      </h5>",
-                      "      <button id='" + value.name.replace(/\s+/g, '') + "' name='" + value.name + "' value='", value.id, "' class='btn btn-info btnIngredient w-100'>Ajouter</button>",
+                      "      <button id='" + value.name.replace(/\s+/g, '') + "' name='" + value.name.replace(/\s+/g, '') + "' value='", value.id, "' class='btn btn-info btnIngredient w-100'>Ajouter</button>",
                       "    </div>",
                       "  </div>",
                       "</div>"
@@ -86,14 +86,15 @@
         }
     });
 
+    // Add ingredient in cart
     $('#ingredients').on('click', '.btnIngredient', function (e){
         let ingredient = e.target;
         let id = ingredient.value;
-        $("#" + ingredient.name.replace(/\s+/g, '')).prop("disabled",true);
-        if (!ingredients.includes(id))
+        $(("#" + ingredient.name + "Card").replace(/\s+/g, '')).hide();
+        if (!ingredients.includes(parseInt(id)))
         {
-            ingredients.push(id);
-            $('.list-group').append("<li class='list-group-item p-2' value='" + encodeHTML(id) +"'><span class=''>" + encodeHTML(ingredient.name) + "</span><button name='" + ingredient.name + "' value='" + encodeHTML(id) +"' class='close btnRemoveIngredient'>&times;</button></li>");
+            ingredients.push(parseInt(id));
+            $('.list-group').append("<li class='list-group-item p-2' value='" + encodeHTML(id) + "'><span class=''>" + encodeHTML(ingredient.name) + "</span><button name='" + ingredient.name + "' value='" + encodeHTML(id) +"' class='close btnRemoveIngredient'>&times;</button></li>");
             $('.list-group').append("<input type='hidden' class='hidden-item' name='ingredients[]' value='" + id + "' />");
             showOrHideFindButton();
         }
@@ -103,18 +104,19 @@
         return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;').replace(/"/g, '&quot;');
     }
 
+    // Remove ingredient in cart on delete click
     $('.list-group').on('click', '.btnRemoveIngredient', function (e){
         let ingredient = e.target;
         let id = ingredient.value;
 
-        var index = ingredients.indexOf(id);
+        var index = ingredients.indexOf(parseInt(id));
         if (index > -1) {
           ingredients.splice(index, 1);
         }
         $(".list-group-item[value='"+id+"']").remove();
         $(".hidden-item[value='"+id+"']").remove();
         showOrHideFindButton();
-        $("#" + ingredient.name.replace(/\s+/g, '')).prop("disabled",false);
+        $(("#" + ingredient.name + "Card").replace(/\s+/g, '')).show();
     });
 
     $.ajaxSetup({
@@ -153,20 +155,22 @@
                       $('#ingredients').html("");
                       $.each(data, function(i, value)
                       {
-                          var tr = $([
-                          "<div class='col-sm-12 col-md-6 col-lg-4 p-2'>",
-                          "  <div class='card'>",
-                          "    <img class='card-img-top p-1' src='uploads/", value.name, ".jpg'>",
-                          "    <div class='card-body'>",
-                          "      <h5 class='card-title'>",
-                              value.name,
-                          "      </h5>",
-                          "      <button id='" + value.name.replace(/\s+/g, '') + "' name='" + value.name + "' value='", value.id, "' class='btn btn-info btnIngredient w-100'>Ajouter</button>",
-                          "    </div>",
-                          "  </div>",
-                          "</div>"
-                          ].join("\n"));
-                          $('#ingredients').append(tr);
+                          if (ingredients.indexOf(value.id) == -1) {
+                              var tr = $([
+                              "<div id='" + value.name.replace(/\s+/g, '') + "Card' class='col-sm-12 col-md-6 col-lg-4 p-2'>",
+                              "  <div class='card'>",
+                              "    <img class='card-img-top p-1' src='uploads/", value.name, ".jpg'>",
+                              "    <div class='card-body'>",
+                              "      <h5 class='card-title'>",
+                                  value.name,
+                              "      </h5>",
+                              "      <button id='" + value.name.replace(/\s+/g, '') + "' name='" + value.name + "' value='", value.id, "' class='btn btn-info btnIngredient w-100'>Ajouter</button>",
+                              "    </div>",
+                              "  </div>",
+                              "</div>"
+                              ].join("\n"));
+                              $('#ingredients').append(tr);
+                          }
                       })
                     },
                     error: function (e) {

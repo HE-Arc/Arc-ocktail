@@ -13,7 +13,7 @@
         @stack('head')
         <title>@yield('title')</title>
     </head>
-    <body style="background-image: url('uploads/background.jpg');
+    <body style="background-image: url(uploads/background.jpg);
         background-repeat: no-repeat;
         background-attachment: fixed;
         background-size: cover;">
