@@ -24,20 +24,10 @@ class HomeController extends Controller
         return view('home.index', ['data' => $data]);
     }
 
-    public function readData()
+    public function readIngredientsFromCategory(Request $request)
     {
-      $categories = DB::table('categories')->get();
-      $ingredients = array();
-      foreach($categories as $categorie)
-      {
-          $ingredients[] = DB::table('ingredients')->where('categorie_id', $categorie->id)->get();
-      }
-      $data = [
-          'categories'  => $categories,
-          'ingredients' => $ingredients
-      ];
-
-      return response($data);
+      $categorie = DB::table('categories')->where('name', $request->input("categorie"))->get();
+      return $ingredients[] = DB::table('ingredients')->where('categorie_id', $categorie[0]->id)->get();
     }
 
     public function searchIngredients(Request $request)

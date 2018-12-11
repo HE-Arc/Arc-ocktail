@@ -9,23 +9,33 @@
     <div class="row m-2">
         <div class="col-sm-12 col-md-8 col-lg-8">
             <div class="row">
-                <div class="btn-group p-2" role="group" aria-label="Basic example">
+                <div class="btn-group p-2 col-12" role="group" aria-label="Basic example">
                     @foreach ($data['categories'] as $categorie)
                         <button id="{{$categorie->name}}Button" type="button" class="btn btn-lg btn-dark">{{$categorie->name}}</button>
                     @endforeach
-                    <!-- TODO - select a suitable place for the search and replace it's CSS -->
-                    <input id="search" type="text" value=" Rechercher..." style="margin-left:30px; height: 100%;"></input>
-                    <!-- -->
+                </div>
+                <input id="search" type="text" placeholder="Rechercher..." class="m-2 form-control"></input>
+                <div id="sadFace" class="col-12 text-center mt-5">
+                  <img src="uploads/noIngredients.png" style="opacity: 0.3;">
+                  <p>Aucun ingrédient ne correspond à votre recherche</p>
                 </div>
             </div>
             <div id="ingredients" class="row"></div>
         </div>
-        <div class="col-sm-12 col-md-4 col-lg-4">
-            <h2 class="p-2">Vos ingrédients</h2>
-            <form action="{{url('findCocktail')}}" method="get" id="cocktailForm">
-                <ul class="list-group"></ul>
-                <button class="btn btn-success btn-lg w-100 mt-3" id="btnFindCocktail">Trouver des cocktails</button>
-            </form>
+        <div class="sticky-top col-sm-12 col-md-4 col-lg-4">
+            <div class="sticky-top">
+                <h2 class="col-12 pt-3 text-center">Vos ingrédients</h2>
+                <div id="emptyCart">
+                  <img src="uploads/cart.png" class="col-6 offset-3 mt-5" style="opacity: 0.3">
+                  <div class="col-12 mt-1 text-center">
+                    <p>Aucun ingrédient sélectionné</p>
+                  </div>
+                </div>
+                <form action="{{url('findCocktail')}}" method="get" id="cocktailForm">
+                    <button class="btn btn-info btn-lg w-100 mt-2 mb-3" id="btnFindCocktail">Trouver des cocktails</button>
+                    <ul class="list-group"></ul>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -35,8 +45,11 @@
 
     <script type="text/javascript">
     let ingredients = [];
+    let loadedIngredients = [];
     showOrHideFindButton();
+    $("#sadFace").hide();
 
+    // Search option for the ingredients
     $("#search").focus(function() {
       $("#search").val("");
     });
@@ -50,23 +63,32 @@
                 dataType: 'JSON',
                 success: function (data) {
                   $('#ingredients').html("");
+                  var counter = 0;
                   $.each(data, function(i, value)
                   {
                       var tr = $([
-                      "<div class='col-sm-12 col-md-6 col-lg-4 p-2'>",
+                      "<div id='" + (value.name + "Card").replace(/\s+/g, '') + "' class='col-sm-12 col-md-6 col-lg-4 p-2'>",
                       "  <div class='card'>",
                       "    <img class='card-img-top p-1' src='uploads/", value.name, ".jpg'>",
                       "    <div class='card-body'>",
                       "      <h5 class='card-title'>",
                           value.name,
                       "      </h5>",
-                      "      <button name='" + value.name + "' value='", value.id, "' class='btn btn-primary btnIngredient'>Ajouter</button>",
+                      "      <button id='" + value.name.replace(/\s+/g, '') + "' name='" + value.name.replace(/\s+/g, '') + "' value='", value.id, "' class='btn btn-info btnIngredient w-100'>Ajouter</button>",
                       "    </div>",
                       "  </div>",
                       "</div>"
                       ].join("\n"));
                       $('#ingredients').append(tr);
+
+                      if (ingredients.indexOf(value.id) != -1) {
+                          $(("#" + value.name + "Card").replace(/\s+/g, '')).hide();
+                      } else {
+                          counter++;
+                      }
                   })
+                  if (counter > 0) $("#sadFace").hide();
+                  else $("#sadFace").show();
                 },
                 error: function (e) {
                     console.log(e.responseText);
@@ -77,15 +99,18 @@
         }
     });
 
+    // Add ingredient in cart
     $('#ingredients').on('click', '.btnIngredient', function (e){
         let ingredient = e.target;
         let id = ingredient.value;
-        if (!ingredients.includes(id))
+        $(("#" + ingredient.name + "Card").replace(/\s+/g, '')).hide();
+        if (!ingredients.includes(parseInt(id)))
         {
-            ingredients.push(id);
-            $('.list-group').append("<li class='list-group-item p-2' value='" + encodeHTML(id) +"'><span class=''>" + encodeHTML(ingredient.name) + "</span><button value='" + encodeHTML(id) +"' class='close btnRemoveIngredient'>&times;</button></li>");
+            ingredients.push(parseInt(id));
+            $('.list-group').append("<li class='list-group-item p-2' value='" + encodeHTML(id) + "'><span class=''>" + encodeHTML(ingredient.name) + "</span><button name='" + ingredient.name + "' value='" + encodeHTML(id) +"' class='close btnRemoveIngredient'>&times;</button></li>");
             $('.list-group').append("<input type='hidden' class='hidden-item' name='ingredients[]' value='" + id + "' />");
             showOrHideFindButton();
+            checkForEmptyCategory();
         }
     });
 
@@ -93,17 +118,31 @@
         return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;').replace(/"/g, '&quot;');
     }
 
-    $('.list-group').on('click', '.btnRemoveIngredient', function (e){
+    function checkForEmptyCategory() {
+        let empty = true;
+        for (let i = 0; i < loadedIngredients.length; i++) {
+            if (ingredients.indexOf(loadedIngredients[i]) == -1) {
+                empty = false;
+            }
+        }
+        if (empty) $("#sadFace").show();
+        else $("#sadFace").hide();
+    }
+
+    // Remove ingredient in cart on delete click
+    $('.list-group').on('click', '.btnRemoveIngredient', function (e) {
         let ingredient = e.target;
         let id = ingredient.value;
 
-        var index = ingredients.indexOf(id);
+        var index = ingredients.indexOf(parseInt(id));
         if (index > -1) {
           ingredients.splice(index, 1);
         }
         $(".list-group-item[value='"+id+"']").remove();
         $(".hidden-item[value='"+id+"']").remove();
         showOrHideFindButton();
+        checkForEmptyCategory();
+        $(("#" + ingredient.name + "Card").replace(/\s+/g, '')).show();
     });
 
     $.ajaxSetup({
@@ -118,38 +157,62 @@
 
     function showOrHideFindButton()
     {
-        if (ingredients.length > 0)
+        if (ingredients.length > 0) {
             $("#btnFindCocktail").show();
-        else
+            $("#emptyCart").hide();
+        } else {
             $("#btnFindCocktail").hide();
+            $("#emptyCart").show();
+        }
     }
     </script>
 
+    <!-- Load all ingredients from a category on it's selection -->
     @foreach ($data['categories'] as $key => $categorie)
         <script type="text/javascript">
             $('#{{$categorie->name}}Button').click(function()
             {
-                $.get("{{ URL::to('read-data') }}", function(data)
-                {
-                    $('#ingredients').html("");
-                    $.each(data.ingredients[{{$key}}], function(i, value)
-                    {
-                        var tr = $([
-                        "<div class='col-sm-12 col-md-6 col-lg-4 p-2'>",
-                        "  <div class='card'>",
-                        "    <img class='card-img-top p-1' src='uploads/", value.name, ".jpg'>",
-                        "    <div class='card-body p-3'>",
-                        "      <h5 class='card-title'>",
-                            value.name,
-                        "      </h5>",
-                        "      <button name='" + value.name + "' value='", value.id, "' class='btn btn-primary btnIngredient w-100'>Ajouter</button>",
-                        "    </div>",
-                        "  </div>",
-                        "</div>"
-                        ].join("\n"));
-                        $('#ingredients').append(tr);
-                    })
-                })
+                $("#search").val("");
+                category = '#{{$categorie->name}}';
+                $.ajax({
+                    url: "{{ URL::to('read-ingredients-from-category') }}",
+                    type: 'GET',
+                    data: 'categorie=' + "{{$categorie->name}}",
+                    dataType: 'JSON',
+                    success: function (data) {
+                        $('#ingredients').html("");
+                        var counter = 0;
+                        loadedIngredients = [];
+                        $.each(data, function(i, value) {
+                            loadedIngredients.push(parseInt(value.id));
+                            var tr = $([
+                            "<div id='" + value.name.replace(/\s+/g, '') + "Card' class='col-sm-12 col-md-6 col-lg-4 p-2'>",
+                            "  <div class='card'>",
+                            "    <img class='card-img-top p-1' src='uploads/", value.name, ".jpg'>",
+                            "    <div class='card-body'>",
+                            "      <h5 class='card-title'>",
+                                value.name,
+                            "      </h5>",
+                            "      <button id='" + value.name.replace(/\s+/g, '') + "' name='" + value.name + "' value='", value.id, "' class='btn btn-info btnIngredient w-100'>Ajouter</button>",
+                            "    </div>",
+                            "  </div>",
+                            "</div>"
+                            ].join("\n"));
+                            $('#ingredients').append(tr);
+
+                            if (ingredients.indexOf(value.id) != -1) {
+                                $(("#" + value.name + "Card").replace(/\s+/g, '')).hide();
+                            } else {
+                                counter++;
+                            }
+                        })
+                        if (counter == 0) $("#sadFace").show();
+                        else $("#sadFace").hide();
+                    },
+                    error: function (e) {
+                        console.log(e.responseText);
+                    }
+                });
             });
         </script>
     @endforeach

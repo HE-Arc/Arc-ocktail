@@ -13,7 +13,10 @@
         @stack('head')
         <title>@yield('title')</title>
     </head>
-    <body>
+    <body style="background-image: url(uploads/background.jpg);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
                 <a class="navbar-brand" href="{{url('/')}}">
@@ -35,13 +38,15 @@
             </div>
         </nav>
 
-        <div class="container border rounded p-0 mt-3 bg-light">
-            @yield('content')
-            @yield('script')
+        <div class="container p-3">
+            <div class="border rounded bg-light">
+                @yield('content')
+                @yield('script')
+            </div>
         </div>
 
-        <footer class="row">
+        <!-- <footer class="row">
             <div class="col-md-12">Pied de page</div>
-        </footer>
+        </footer> -->
     </body>
 </html>
