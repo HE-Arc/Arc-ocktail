@@ -12,7 +12,7 @@
                 <!-- <div class="row m-2"> -->
                     @foreach ($data['categories'] as $categorie)
                         <div class="col-lg-2 col-md-3 col-6 p-1">
-                            <button id="{{$categorie->name}}Button" type="button" class="btn btn-lg btn-outline-light rounded-0 w-100">{{$categorie->name}}</button>
+                            <button id="{{$categorie->name}}Button" type="button" class="btn btn-lg btn-outline-light rounded-0 w-100 text-truncate">{{$categorie->name}}</button>
                         </div>
                     @endforeach
                 <!-- </div> -->
