@@ -6,9 +6,9 @@
 
 @section('content')
     <div class="row row justify-content-center">
-        <div class="col-sm-12 col-md-8 col-lg-6 border rounded p-3">
+        <div class="col-sm-12 col-md-8 col-lg-6 p-3 m-4">
             <h1>Login</h1>
-            {!! Form ::open(array('route' => 'handleLogin')) !!}
+            {!! Form ::open(array('url' => 'login')) !!}
                 <div class="form-group">
                     {!! Form::label('username') !!}
                     {!! Form::text('username', null, array('class' => 'form-control')) !!}

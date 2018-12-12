@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -33,5 +34,10 @@ class HomeController extends Controller
     public function searchIngredients(Request $request)
     {
       return DB::table('ingredients')->where('name', 'like', '%'.$request->input("ingredient").'%')->get();
+    }
+
+    public function showLogin()
+    {
+        return view('login.login');
     }
 }

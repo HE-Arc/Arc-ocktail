@@ -19,3 +19,6 @@ Route::resource("ingredient", "IngredientController", ["only"=> ["store", "creat
 Route::resource("cocktail", "CocktailController", ["only"=> ["store", "create", "show"]]);
 
 Route::get('/findCocktail','CocktailController@findCocktail');
+
+Route::get('login', array('uses' => 'HomeController@showLogin'));
+Route::post('login', array('uses' => 'HomeController@doLogin'));
