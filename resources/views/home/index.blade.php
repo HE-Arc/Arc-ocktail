@@ -44,6 +44,19 @@
 @section('script')
 
     <script type="text/javascript">
+
+    let selectedIngredients = {!!$selectedIngredients!!};
+    $(document).ready(function()
+    {
+        console.log(selectedIngredients);
+        const keys = Object.keys(selectedIngredients);
+        for(let i = 0; i < keys.length; i++)
+        {
+            selectIngredient(keys[i], selectedIngredients[keys[i]]);
+        }
+
+    });
+
     let ingredients = [];
     let loadedIngredients = [];
     showOrHideFindButton();
@@ -103,16 +116,21 @@
     $('#ingredients').on('click', '.btnIngredient', function (e){
         let ingredient = e.target;
         let id = ingredient.value;
-        $(("#" + ingredient.name + "Card").replace(/\s+/g, '')).hide();
+        selectIngredient(id, ingredient.name)
+    });
+
+    function selectIngredient(id, name)
+    {
+        $(("#" + name + "Card").replace(/\s+/g, '')).hide();
         if (!ingredients.includes(parseInt(id)))
         {
             ingredients.push(parseInt(id));
-            $('.list-group').append("<li class='list-group-item p-2' value='" + encodeHTML(id) + "'><span class=''>" + encodeHTML(ingredient.name) + "</span><button name='" + ingredient.name + "' value='" + encodeHTML(id) +"' class='close btnRemoveIngredient'>&times;</button></li>");
+            $('.list-group').append("<li class='list-group-item p-2' value='" + encodeHTML(id) + "'><span class=''>" + encodeHTML(name) + "</span><button name='" + name + "' value='" + encodeHTML(id) +"' class='close btnRemoveIngredient'>&times;</button></li>");
             $('.list-group').append("<input type='hidden' class='hidden-item' name='ingredients[]' value='" + id + "' />");
             showOrHideFindButton();
             checkForEmptyCategory();
         }
-    });
+    }
 
     function encodeHTML(s) {
         return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;').replace(/"/g, '&quot;');
@@ -143,7 +161,14 @@
         showOrHideFindButton();
         checkForEmptyCategory();
         $(("#" + ingredient.name + "Card").replace(/\s+/g, '')).show();
+
+        // TODO remove from cookie
+        delete_cookie("ingredients");
     });
+
+    function delete_cookie(name) {
+      document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+    }
 
     $.ajaxSetup({
       headers: {

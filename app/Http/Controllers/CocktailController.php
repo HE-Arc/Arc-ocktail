@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Cookie;
 use App\Ingredient;
 use App\Cocktail;
 use App\Quantity;
@@ -61,6 +62,9 @@ class CocktailController extends Controller
         $order = Input::get('orderby');
         $direction = Input::get('direction');
         $ingredients = Input::get('ingredients');
+
+        Cookie::queue("ingredients", json_encode($ingredients), 60);
+
         $possibleCocktails = DB::table('cocktails')
             ->join('quantities', 'quantities.cocktail_id', '=', 'cocktails.id')
             ->whereIn('ingredient_id', $ingredients)
