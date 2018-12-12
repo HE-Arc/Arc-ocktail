@@ -24,10 +24,10 @@ $(document).ready(function(){
                       printErrorMsg(data.error);
                       }else{
                           $('#addCategorieForm')[0].reset();
-                          $(".print-success-msg").find("ul").html('');
+                          $(".print-success-msg").find("span").html('');
                           $(".print-success-msg").css('display','block');
                           $(".print-error-msg").css('display','none');
-                          $(".print-success-msg").find("ul").append('<li>Record Inserted Successfully.</li>');
+                          $(".print-success-msg").find("span").append('Record Inserted Successfully.');
                       }}
                   });
                });
@@ -47,10 +47,10 @@ $(document).ready(function(){
                          printErrorMsg(data.error);
                          }else{
                              $('#addUnitForm')[0].reset();
-                             $(".print-success-msg").find("ul").html('');
+                             $(".print-success-msg").find("span").html('');
                              $(".print-success-msg").css('display','block');
                              $(".print-error-msg").css('display','none');
-                             $(".print-success-msg").find("ul").append('<li>Record Inserted Successfully.</li>');
+                             $(".print-success-msg").find("span").append('Record Inserted Successfully.');
                          }}
                  });
                   });
@@ -76,20 +76,20 @@ $(document).ready(function(){
                             printErrorMsg(data.error);
                             }else{
                                 $('#addIngredientForm')[0].reset();
-                                $(".print-success-msg").find("ul").html('');
+                                $(".print-success-msg").find("span").html('');
                                 $(".print-success-msg").css('display','block');
                                 $(".print-error-msg").css('display','none');
-                                $(".print-success-msg").find("ul").append('<li>Record Inserted Successfully.</li>');
+                                $(".print-success-msg").find("span").append('Record Inserted Successfully');
                             }}
                      });
                  });
 
                      function printErrorMsg (msg) {
-                      $(".print-error-msg").find("ul").html('');
+                      $(".print-error-msg").find("span").html('');
                       $(".print-error-msg").css('display','block');
                       $(".print-success-msg").css('display','none');
                       $.each( msg, function( key, value ) {
-                         $(".print-error-msg").find("ul").append('<li>'+value+'</li>');
+                         $(".print-error-msg").find("span").append(value);
                       });
                    }
             });
@@ -99,48 +99,49 @@ $(document).ready(function(){
 
 @section('content')
 
-<div class="row m-2">
+<div class="row p-2 m-0">
+    <h1 class="col-12">Création d'éléments</h1>
+
     <!-- Button and form to add a categorie-->
-    <div class="p-0 col-lg-4 col-md-6 col-sm-12 m-2">
+    <div class="col-lg-4 col-md-6 col-sm-12 p-2">
         <button type="button" class="btn btn-primary btn-lg w-100 m-0" data-toggle="modal" data-target="#addCategorie">Ajouter une catégorie</button>
     </div>
     <form method="post" action="{{url('ingredient')}}" id="addCategorieForm">
-            @csrf
+        @csrf
 
-    <div class="modal fade" id="addCategorie" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="alert alert-danger print-error-msg" style="display:none">
-            <ul></ul>
+        <div class="modal fade text-dark" id="addCategorie" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content p-2 rounded-0">
+                    <div class="alert alert-danger print-error-msg rounded-0" style="display:none">
+                        <span></span>
+                    </div>
+                    <div class="alert alert-success print-success-msg" style="display:none">
+                        <span></span>
+                    </div>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ajouter une catégorie</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <label for="Name">Nom de la catégorie:</label>
+                            <input type="text" class="form-control" name="categorieName" id="categorieName">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button  class="btn btn-success" id="categorieSubmit">Save changes</button>
+                    </div>
+                </div>
             </div>
-
-            <div class="alert alert-success print-success-msg" style="display:none">
-            <ul></ul>
-            </div>
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ajouter une catégorie</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-              <div class="row">
-                    <label for="Name">Nom de la catégorie:</label>
-                    <input type="text" class="form-control" name="categorieName" id="categorieName">
-              </div>
-          </div>
-          <div class="modal-footer">
-          	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button  class="btn btn-success" id="categorieSubmit">Save changes</button>
         </div>
-        </div>
-      </div>
-    </div>
     </form>
 
 
     <!-- Button and form to add a unit-->
-    <div class="p-0 col-lg-4 col-md-6 col-sm-12 m-2">
+    <div class="col-lg-4 col-md-6 col-sm-12 p-2">
         <button type="button" class="btn btn-primary btn-lg w-100 m-0" data-toggle="modal" data-target="#addUnit">Ajouter une unité</button>
     </div>
     <form method="post" action="{{url('ingredient')}}" id="addUnitForm">
@@ -150,11 +151,11 @@ $(document).ready(function(){
       <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="alert alert-danger print-error-msg" style="display:none">
-            <ul></ul>
+                <span></span>
             </div>
 
             <div class="alert alert-success print-success-msg" style="display:none">
-            <ul></ul>
+                <span></span>
             </div>
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Ajouter une unité</h5>
@@ -179,7 +180,7 @@ $(document).ready(function(){
 
 
     <!-- Button and form to add an ingredient-->
-    <div class="p-0 col-lg-4 col-md-6 col-sm-12 m-2">
+    <div class="col-lg-4 col-md-6 col-sm-12 p-2">
         <button type="button" class="btn btn-primary btn-lg w-100 m-0" data-toggle="modal" data-target="#addIngredient">Ajouter un ingrédient</button>
     </div>
     <form method="post" action="{{url('ingredient')}}" id="addIngredientForm" enctype="multipart/form-data">
@@ -189,11 +190,11 @@ $(document).ready(function(){
       <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="alert alert-danger print-error-msg" style="display:none">
-            <ul></ul>
+                <span></span>
             </div>
 
             <div class="alert alert-success print-success-msg" style="display:none">
-            <ul></ul>
+                <span></span>
             </div>
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Ajouter un ingrédient</h5>
