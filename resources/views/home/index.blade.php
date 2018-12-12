@@ -34,8 +34,10 @@
                   </div>
                 </div>
                 <form action="{{url('findCocktail')}}" method="get" id="cocktailForm">
-                    <button class="btn btn-info btn-lg w-100 mt-2 mb-3 rounded-0" id="btnFindCocktail">Trouver des cocktails</button>
-                    <ul class="list-group rounded-0 text-dark"></ul>
+                  <!-- TODO Bootstrap -->
+                  <button class="col-10 col-md-9 btn btn-info btn-lg my-3 rounded-0 text-truncate" id="btnFindCocktail" style="width: 80%">Trouver des cocktails</button>
+                  <button class="col-2 col-md-3 btn btn-danger btn-lg my-3 rounded-0" id="btnDeleteIngredients" style="float:right">X</button>
+                  <ul class="list-group rounded-0 text-dark"></ul>
                 </form>
             </div>
         </div>
@@ -48,6 +50,7 @@
     <script type="text/javascript">
     let ingredients = [];
     let loadedIngredients = [];
+    let loadedIngredientsName = [];
     showOrHideFindButton();
     $("#sadFace").hide();
 
@@ -109,8 +112,8 @@
         if (!ingredients.includes(parseInt(id)))
         {
             ingredients.push(parseInt(id));
-            $('.list-group').append("<li class='list-group-item p-2 rounded-0 border-0' value='" + encodeHTML(id) + "'><span class=''>" + encodeHTML(ingredient.name) + "</span><button name='" + ingredient.name + "' value='" + encodeHTML(id) +"' class='close btnRemoveIngredient'>&times;</button></li>");
-            $('.list-group').append("<input type='hidden' class='hidden-item' name='ingredients[]' value='" + id + "' />");
+            $('.list-group').append("<li class='list-group-item p-2 rounded-0 border-0' value='" + parseInt(id) + "'><span class=''>" + encodeHTML(ingredient.name) + "</span><button name='" + ingredient.name + "' value='" + encodeHTML(id) +"' class='close btnRemoveIngredient'>&times;</button></li>");
+            $('.list-group').append("<input type='hidden' class='hidden-item' name='ingredients[]' value='" + parseInt(id) + "' />");
             showOrHideFindButton();
             checkForEmptyCategory();
         }
@@ -120,6 +123,7 @@
         return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;').replace(/"/g, '&quot;');
     }
 
+    // If the category doesn't have ingredients anymore, display sad face
     function checkForEmptyCategory() {
         let empty = true;
         for (let i = 0; i < loadedIngredients.length; i++) {
@@ -140,30 +144,48 @@
         if (index > -1) {
           ingredients.splice(index, 1);
         }
-        $(".list-group-item[value='"+id+"']").remove();
-        $(".hidden-item[value='"+id+"']").remove();
+        $(".list-group-item[value='" + parseInt(id) + "']").remove();
+        $(".hidden-item[value='" + parseInt(id) + "']").remove();
         showOrHideFindButton();
         checkForEmptyCategory();
         $(("#" + ingredient.name + "Card").replace(/\s+/g, '')).show();
     });
 
-    $.ajaxSetup({
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      }
-  });
+    // Delete all the content of the cart
+    $("#btnDeleteIngredients").click(function(e) {
+        e.preventDefault();
+        // Remove the group items of the cart
+        for (let i = 0; i < ingredients.length; i++) {
+            let id = ingredients[i];
+            $(".list-group-item[value='" + id + "']").remove();
+            $(".hidden-item[value='" + id + "']").remove();
+        }
+        // Show the cards of the ingredients
+        for (let i = 0; i < loadedIngredientsName.length; i++) {
+            let name = loadedIngredientsName[i];
+            $(("#" + name + "Card").replace(/\s+/g, '')).show();
+        }
+        // Adapt the state of the cart visually
+        ingredients = [];
+        showOrHideFindButton();
+        checkForEmptyCategory();
+    });
 
-    $("#btnFindCocktail").click(function(e) {
-        $("#cocktailForm").submit();
+    $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
     });
 
     function showOrHideFindButton()
     {
         if (ingredients.length > 0) {
             $("#btnFindCocktail").show();
+            $("#btnDeleteIngredients").show();
             $("#emptyCart").hide();
         } else {
             $("#btnFindCocktail").hide();
+            $("#btnDeleteIngredients").hide();
             $("#emptyCart").show();
         }
     }
@@ -185,8 +207,10 @@
                         $('#ingredients').html("");
                         var counter = 0;
                         loadedIngredients = [];
+                        loadedIngredientsName = [];
                         $.each(data, function(i, value) {
                             loadedIngredients.push(parseInt(value.id));
+                            loadedIngredientsName.push(value.name);
                             var tr = $([
                             "<div id='" + value.name.replace(/\s+/g, '') + "Card' class='col-6 col-md-6 col-lg-4 p-2'>",
                             "  <div class='card rounded-0 border-0'>",
