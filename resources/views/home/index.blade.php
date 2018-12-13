@@ -9,13 +9,11 @@
     <div class="row p-2 m-0">
         <div class="col-sm-12 col-md-8 col-lg-8">
             <div class="row p-2">
-                <!-- <div class="row m-2"> -->
-                    @foreach ($data['categories'] as $categorie)
-                        <div class="col-lg-2 col-md-3 col-6 p-1">
-                            <button id="{{$categorie->name}}Button" type="button" class="btn btn-lg btn-outline-light rounded-0 w-100 text-truncate">{{$categorie->name}}</button>
-                        </div>
-                    @endforeach
-                <!-- </div> -->
+                @foreach ($data['categories'] as $categorie)
+                    <div class="col-lg-2 col-md-3 col-6 p-1">
+                        <button id="{{$categorie->name}}Button" type="button" class="btn btn-lg btn-outline-light rounded-0 w-100 text-truncate">{{$categorie->name}}</button>
+                    </div>
+                @endforeach
                 <input id="search" type="text" placeholder="Rechercher..." class="mt-3 form-control rounded-0 border-0"></input>
                 <div id="sadFace" class="col-12 text-center">
                   <img src="uploads/noIngredients.png" class="my-3" style="opacity: 0.5;">
@@ -48,6 +46,14 @@
 
     <script type="text/javascript">
 
+    let ingredients = [];
+    let ingredientsName = [];
+    let loadedIngredients = [];
+    let loadedIngredientsName = [];
+    showOrHideFindButton();
+    $("#sadFace").hide();
+
+    // Cookies reception
     $(document).ready(function()
     {
         let cookie = getCookie("ingredients");
@@ -70,13 +76,6 @@
         var parts = value.split("; " + name + "=");
         if (parts.length == 2) return parts.pop().split(";").shift();
     }
-
-    let ingredients = [];
-    let ingredientsName = [];
-    let loadedIngredients = [];
-    let loadedIngredientsName = [];
-    showOrHideFindButton();
-    $("#sadFace").hide();
 
     // Search option for the ingredients
     $("#search").focus(function() {

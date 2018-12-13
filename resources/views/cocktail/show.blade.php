@@ -10,7 +10,7 @@
 
     <h1 class="col-12">{{$cocktail->name}}</h1>
 
-    <div class="col-12 col-lg-4 p-2">
+    <div id="imgCocktail" class="col-12 col-lg-4 p-2">
         <div class="banner">
             <div class="banner" style="background-image: url('../uploads/{{$cocktail->name}}.jpg');">
             </div>
@@ -18,7 +18,7 @@
 
     </div>
 
-    <div class="col-12 col-lg-3 p-2">
+    <div id="ingredientsCocktail" class="col-12 col-lg-3 p-2">
         <div class="card rounded-0 border-0 bg-dark">
             <div class="card-header">Ingrédients</div>
             <div class="card-body">
@@ -31,7 +31,7 @@
         </div>
     </div>
 
-    <div class="col-12 col-lg-5 p-2">
+    <div id="receiptCocktail" class="col-12 col-lg-5 p-2">
         <div class="card rounded-0 border-0 bg-dark">
             <div class="card-header">Recette</div>
             <div class="card-body">
@@ -44,5 +44,12 @@
 
 
 </div>
+
+<script type="text/javascript">
+    let heightImage = $("#imgCocktail").height();
+    let heightIngredients = $("#ingredientsCocktail").height();
+    let heightReceipt = $("#receiptCocktail").height();
+    console.log(heightImage + " " + heightIngredients + " " + heightReceipt);
+</script>
 
 @endsection
