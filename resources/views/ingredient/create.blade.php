@@ -21,13 +21,13 @@ $(document).ready(function(){
                   },
                   success: function(data){
                       if(data.error){
-                      printErrorMsg(data.error);
+                      printErrorMsg(data.error, "cat-");
                       }else{
                           $('#addCategorieForm')[0].reset();
-                          $(".no-error").find("span").html('');
-                          $(".no-error").css('display','block');
-                          $(".error").css('display','none');
-                          $(".no-error").find("span").append('La catégorie a bien été ajoutée !');
+                          $(".cat-no-error").find("span").html('');
+                          $(".cat-no-error").css('display','block');
+                          $(".cat-error").css('display','none');
+                          $(".cat-no-error").find("span").append('La catégorie a bien été ajoutée !');
                       }}
                   });
                });
@@ -44,13 +44,13 @@ $(document).ready(function(){
                      },
                      success: function(data){
                          if(data.error){
-                         printErrorMsg(data.error);
+                         printErrorMsg(data.error, "unit-");
                          }else{
                              $('#addUnitForm')[0].reset();
-                             $(".no-error").find("span").html('');
-                             $(".no-error").css('display','block');
-                             $(".error").css('display','none');
-                             $(".no-error").find("span").append('L\'unité a bien été ajoutée !');
+                             $(".unit-no-error").find("span").html('');
+                             $(".unit-no-error").css('display','block');
+                             $(".unit-error").css('display','none');
+                             $(".unit-no-error").find("span").append('L\'unité a bien été ajoutée !');
                          }}
                  });
                   });
@@ -73,23 +73,23 @@ $(document).ready(function(){
                         contentType: false,
                         success: function(data){
                             if(data.error){
-                            printErrorMsg(data.error);
+                            printErrorMsg(data.error, "ing-");
                             }else{
                                 $('#addIngredientForm')[0].reset();
-                                $(".no-error").find("span").html('');
-                                $(".no-error").css('display','block');
-                                $(".error").css('display','none');
-                                $(".no-error").find("span").append('L\'ingérdient a bien été ajouté !');
+                                $(".ing-no-error").find("span").html('');
+                                $(".ing-no-error").css('display','block');
+                                $(".ing-error").css('display','none');
+                                $(".ing-no-error").find("span").append('L\'ingérdient a bien été ajouté !');
                             }}
                      });
                  });
 
-                     function printErrorMsg (msg) {
-                      $(".error").find("span").html('');
-                      $(".error").css('display','block');
-                      $(".no-error").css('display','none');
+                     function printErrorMsg (msg, elem) {
+                      $("."+elem+"error").find("span").html('');
+                      $("."+elem+"error").css('display','block');
+                      $("."+elem+"no-error").css('display','none');
                       $.each( msg, function( key, value ) {
-                         $(".error").find("span").append(value);
+                         $("."+elem+"error").find("span").append(value);
                       });
                    }
             });
@@ -121,10 +121,10 @@ $(document).ready(function(){
                         <label for="Name">Nom de la catégorie :</label>
                         <input type="text" class="form-control rounded-0" name="categorieName" id="categorieName">
 
-                        <div class="error alert bg-danger text-white rounded-0 border-0 my-2" style="display:none">
+                        <div class="cat-error alert bg-danger text-white rounded-0 border-0 my-2" style="display:none">
                             <span></span>
                         </div>
-                        <div class="no-error alert bg-success text-white rounded-0 border-0 my-2" style="display:none">
+                        <div class="cat-no-error alert bg-success text-white rounded-0 border-0 my-2" style="display:none">
                             <span></span>
                         </div>
 
@@ -157,10 +157,10 @@ $(document).ready(function(){
                         <label for="Name">Nom de l'unité :</label>
                         <input type="text" class="form-control rounded-0" name="unitName" id="unitName">
 
-                        <div class="error alert bg-danger text-white rounded-0 border-0 my-2" style="display:none">
+                        <div class="unit-error alert bg-danger text-white rounded-0 border-0 my-2" style="display:none">
                             <span></span>
                         </div>
-                        <div class="no-error alert bg-success text-white rounded-0 border-0 my-2" style="display:none">
+                        <div class="unit-no-error alert bg-success text-white rounded-0 border-0 my-2" style="display:none">
                             <span></span>
                         </div>
                     </div>
@@ -221,10 +221,10 @@ $(document).ready(function(){
                             <input type="file" class="col-6" name="image" id="image">
                         </div>
 
-                        <div class="error alert bg-danger text-white rounded-0 border-0 my-2" style="display:none">
+                        <div class="ing-error alert bg-danger text-white rounded-0 border-0 my-2" style="display:none">
                             <span></span>
                         </div>
-                        <div class="no-error alert bg-success text-white rounded-0 border-0 my-2" style="display:none">
+                        <div class="ing-no-error alert bg-success text-white rounded-0 border-0 my-2" style="display:none">
                             <span></span>
                         </div>
                     </div>

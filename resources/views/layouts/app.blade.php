@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -25,7 +26,8 @@
                 </a>
 
                 <form class="form-inline my-2 my-lg-0">
-                    <button class="btn btn-outline-success mr-2 my-2 my-sm-0 rounded-0" type="submit">Connexion administrateur</button>
+                    <a href="{{url('/cocktail/create')}}" class="btn btn-outline-success mr-2 my-2 my-sm-0 rounded-0">Création de cocktail</a>
+                    <a href="{{url('/ingredient/create')}}" class="btn btn-outline-success mr-2 my-2 my-sm-0 rounded-0">Création d'ingrédient</a>
                     <!-- <button class="btn btn-primary my-2 my-sm-0" type="submit">Register</button> -->
                 </form>
             </div>
