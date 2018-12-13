@@ -63,7 +63,7 @@ class CocktailController extends Controller
         $direction = Input::get('direction');
         $ingredients = Input::get('ingredients');
 
-        Cookie::queue("ingredients", json_encode($ingredients), 60);
+        //Cookie::queue(Cookie::make("ingredients", json_encode($ingredients), 60, "/", "arcocktail"));
 
         $possibleCocktails = DB::table('cocktails')
             ->join('quantities', 'quantities.cocktail_id', '=', 'cocktails.id')
@@ -71,7 +71,6 @@ class CocktailController extends Controller
             ->select('cocktail_id', 'name', 'alcohol_degree')
             ->groupBy('cocktail_id')
             ->get();
-            //->pluck('cocktail_id', 'ingredient_id');
 
         $this->fillIngredient($possibleCocktails);
         $this->setPercentageList($possibleCocktails, $ingredients);

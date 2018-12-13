@@ -22,7 +22,7 @@ class HomeController extends Controller
             'ingredients' => $ingredients
         ];
 
-        $selectedIngredients = [];
+      /*  $selectedIngredients = [];
         $selectedIngredientsId = json_decode(Cookie::get('ingredients'));
         if (!is_null($selectedIngredientsId))
         {
@@ -31,9 +31,9 @@ class HomeController extends Controller
             {
                 $selectedIngredients[$id] = $selectedIngredientsName[$key];
             }
-        }
+        }*/
 
-        return view('home.index', ['data' => $data, 'selectedIngredients' => json_encode($selectedIngredients)]);
+      return view('home.index', ['data' => $data/*, 'selectedIngredients' => json_encode($selectedIngredients)*/]);
     }
 
     public function readIngredientsFromCategory(Request $request)
