@@ -67,7 +67,7 @@ $(document).ready(function(){
 @section('content')
 
 <h1>Ajout de cocktail</h1>
-{!! Form::open(['route' => 'cocktail.store', 'files' => true, 'id' => 'addCocktail']) !!}
+{!! Form::open(['route' => 'cocktail_creation.store', 'files' => true, 'id' => 'addCocktail']) !!}
 <div class="alert alert-danger print-error-msg" style="display:none">
 <ul></ul>
 </div>

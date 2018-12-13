@@ -11,14 +11,17 @@
 |
 */
 
-Route::get("/", "HomeController@index");
+Route::get("/", "HomeController@index")->name("home");
 
 Route::get("read-ingredients-from-category", "HomeController@readIngredientsFromCategory");
 Route::get("search-ingredients", "HomeController@searchIngredients");
 Route::resource("ingredient", "IngredientController", ["only"=> ["store", "create"]]);
-Route::resource("cocktail", "CocktailController", ["only"=> ["store", "create", "show"]]);
+Route::resource("cocktail", "CocktailController", ["only" => ["show"]]);
+Route::resource("cocktail_creation", "CocktailCreationController", ["only" => ["store", "create"]]);
 
 Route::get('/findCocktail','CocktailController@findCocktail');
 
-Route::get('login', array('uses' => 'HomeController@showLogin'));
-Route::post('login', array('uses' => 'HomeController@doLogin'));
+/*Route::get('login', array('uses' => 'HomeController@showLogin'));
+Route::post('login', array('uses' => 'HomeController@doLogin'));*/
+
+Auth::routes();

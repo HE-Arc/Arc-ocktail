@@ -25,7 +25,7 @@
                 </a>
 
                 <form class="form-inline my-2 my-lg-0">
-                    <button class="btn btn-outline-success mr-2 my-2 my-sm-0 rounded-0" type="submit">Connexion administrateur</button>
+                    <a href="{{url('/cocktail_creation/create')}}" class="btn btn-outline-success mr-2 my-2 my-sm-0 rounded-0">Création de cocktail</a>
                     <!-- <button class="btn btn-primary my-2 my-sm-0" type="submit">Register</button> -->
                 </form>
             </div>

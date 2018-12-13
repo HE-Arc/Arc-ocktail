@@ -13,11 +13,6 @@ use Validator;
 
 class IngredientController extends Controller
 {
-    public function index()
-    {
-
-    }
-
     public function create()
     {
         $ingredients = Ingredient::all();
