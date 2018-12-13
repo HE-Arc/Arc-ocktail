@@ -87,13 +87,13 @@
                       $('#ingredients').append(tr);
 
                       if (ingredients.indexOf(value.id) != -1) {
-                          $(("#" + value.name + "Card").replace(/\s+/g, '')).hide();
+                          $(("#" + value.name + "Card").replace(/\s+/g, '')).hide(200);
                       } else {
                           counter++;
                       }
                   })
                   if (counter > 0) $("#sadFace").hide();
-                  else $("#sadFace").show();
+                  else $("#sadFace").show(500);
                 },
                 error: function (e) {
                     console.log(e.responseText);
@@ -108,12 +108,14 @@
     $('#ingredients').on('click', '.btnIngredient', function (e){
         let ingredient = e.target;
         let id = ingredient.value;
-        $(("#" + ingredient.name + "Card").replace(/\s+/g, '')).hide();
+        $(("#" + ingredient.name + "Card").replace(/\s+/g, '')).hide(200);
         if (!ingredients.includes(parseInt(id)))
         {
             ingredients.push(parseInt(id));
-            $('.list-group').append("<li class='list-group-item p-2 rounded-0 border-0' value='" + parseInt(id) + "'><span class=''>" + encodeHTML(ingredient.name) + "</span><button name='" + ingredient.name + "' value='" + encodeHTML(id) +"' class='close btnRemoveIngredient'>&times;</button></li>");
+            $('.list-group').append("<li id='listItem" + parseInt(id) + "' class='list-group-item p-2 rounded-0 border-0' value='" + parseInt(id) + "'><span class=''>" + encodeHTML(ingredient.name) + "</span><button name='" + ingredient.name + "' value='" + encodeHTML(id) +"' class='close btnRemoveIngredient'>&times;</button></li>");
             $('.list-group').append("<input type='hidden' class='hidden-item' name='ingredients[]' value='" + parseInt(id) + "' />");
+            $('#listItem' + parseInt(id)).hide();
+            $('#listItem' + parseInt(id)).show(500);
             showOrHideFindButton();
             checkForEmptyCategory();
         }
@@ -131,8 +133,8 @@
                 empty = false;
             }
         }
-        if (empty) $("#sadFace").show();
-        else $("#sadFace").hide();
+        if (empty) $("#sadFace").show(500);
+        else $("#sadFace").hide(200);
     }
 
     // Remove ingredient in cart on delete click
@@ -148,7 +150,7 @@
         $(".hidden-item[value='" + parseInt(id) + "']").remove();
         showOrHideFindButton();
         checkForEmptyCategory();
-        $(("#" + ingredient.name + "Card").replace(/\s+/g, '')).show();
+        $(("#" + ingredient.name + "Card").replace(/\s+/g, '')).show(500);
     });
 
     // Delete all the content of the cart
@@ -163,7 +165,7 @@
         // Show the cards of the ingredients
         for (let i = 0; i < loadedIngredientsName.length; i++) {
             let name = loadedIngredientsName[i];
-            $(("#" + name + "Card").replace(/\s+/g, '')).show();
+            $(("#" + name + "Card").replace(/\s+/g, '')).show(500);
         }
         // Adapt the state of the cart visually
         ingredients = [];
@@ -180,13 +182,13 @@
     function showOrHideFindButton()
     {
         if (ingredients.length > 0) {
-            $("#btnFindCocktail").show();
-            $("#btnDeleteIngredients").show();
-            $("#emptyCart").hide();
+            $("#btnFindCocktail").show(500);
+            $("#btnDeleteIngredients").show(500);
+            $("#emptyCart").hide(200);
         } else {
             $("#btnFindCocktail").hide();
             $("#btnDeleteIngredients").hide();
-            $("#emptyCart").show();
+            $("#emptyCart").show(500);
         }
     }
     </script>
@@ -227,13 +229,13 @@
                             $('#ingredients').append(tr);
 
                             if (ingredients.indexOf(value.id) != -1) {
-                                $(("#" + value.name + "Card").replace(/\s+/g, '')).hide();
+                                $(("#" + value.name + "Card").replace(/\s+/g, '')).hide(200);
                             } else {
                                 counter++;
                             }
                         })
-                        if (counter == 0) $("#sadFace").show();
-                        else $("#sadFace").hide();
+                        if (counter == 0) $("#sadFace").show(500);
+                        else $("#sadFace").hide(200);
                     },
                     error: function (e) {
                         console.log(e.responseText);
