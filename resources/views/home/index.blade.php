@@ -98,7 +98,7 @@
                       var tr = $([
                       "<div id='" + (value.name + "Card").replace(/\s+/g, '') + "' class='col-6 col-md-6 col-lg-4 p-2'>",
                       "  <div class='card rounded-0 border-0'>",
-                      "    <img class='card-img-top p-1' src='uploads/", value.name, ".jpg'>",
+                      "    <img class='card-img-top p-1' src='" + '{{url('/uploads/')}}' + "/" + value.name + "'.jpg'>",
                       "    <div class='card-body p-3'>",
                       "      <h5 class='card-title text-dark'>",
                           value.name,
