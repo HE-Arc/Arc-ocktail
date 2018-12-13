@@ -13,7 +13,7 @@ class TrustProxies extends Middleware
      * @var array
      */
 protected $proxies = [
-    '172.18.0.6',  // Replace with the address found using the command above
+    '172.18.0.2',  // Replace with the address found using the command above
 ];
 
     /**
