@@ -13,35 +13,33 @@
         @stack('head')
         <title>@yield('title')</title>
     </head>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <body style="background-image: url('/uploads/background.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark-op-50">
             <div class="container">
                 <a class="navbar-brand" href="{{url('/')}}">
                     <img src="{{ asset('icons/logo.png') }}" width="30" height="30" class="d-inline-block align-top" alt="">
                     Arc'ocktail
                 </a>
 
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-
                 <form class="form-inline my-2 my-lg-0">
-                    <button class="btn btn-outline-primary mr-2 my-2 my-sm-0" type="submit">
-                        <span class="glyphicon glyphicon-tint" aria-hidden="true"></span>Login
-                    </button>
-                    <button class="btn btn-primary my-2 my-sm-0" type="submit">Register</button>
+                    <button class="btn btn-outline-success mr-2 my-2 my-sm-0 rounded-0" type="submit">Connexion administrateur</button>
+                    <!-- <button class="btn btn-primary my-2 my-sm-0" type="submit">Register</button> -->
                 </form>
             </div>
         </nav>
 
-        <div class="container border rounded p-0 mt-3 bg-light">
-            @yield('content')
-            @yield('script')
+        <div class="container p-3">
+            <div class="text-white bg-dark-op-50">
+                @yield('content')
+                @yield('script')
+            </div>
         </div>
 
-        <footer class="row">
+        <!-- <footer class="row">
             <div class="col-md-12">Pied de page</div>
-        </footer>
+        </footer> -->
     </body>
 </html>
