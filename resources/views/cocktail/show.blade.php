@@ -12,7 +12,7 @@
 
     <div class="col-12 col-lg-4 p-2">
         <div class="banner">
-            <div class="banner" style="background-image: url('../uploads/{{$cocktail->name}}.jpg');">
+            <div class="banner" style="background-image: url('../uploads/{{strtolower($cocktail->name)}}.jpg');">
             </div>
         </div>
 

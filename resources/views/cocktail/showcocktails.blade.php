@@ -37,7 +37,7 @@
                 <div class='col-6 col-lg-3 p-2'>
                     <a href="{{url('cocktail/' . $cocktail->cocktail_id)}}">
                         <div class='card rounded-0 border-0'>
-                            <img class='card-img-top p-1' src='uploads/{{$cocktail->name}}.jpg'>
+                            <img class='card-img-top p-1' src='uploads/{{strtolower($cocktail->name)}}.jpg'>
                             <div class='card-body p-3'>
                                 <h5 class='card-title'>{{$cocktail->name}} ({{$cocktail->alcohol_degree}}°)</h5>
                                 <div class="progress rounded-0 mb-1">
