@@ -96,17 +96,19 @@
                   $.each(data, function(i, value)
                   {
                       var tr = $([
-                      "<div id='" + (value.name + "Card").replace(/\s+/g, '') + "' class='col-6 col-md-6 col-lg-4 p-2'>",
-                      "  <div class='card rounded-0 border-0'>",
-                      "    <img class='card-img-top p-1' src='uploads/", value.name, ".jpg'>",
-                      "    <div class='card-body p-3'>",
-                      "      <h5 class='card-title text-dark'>",
-                          value.name,
-                      "      </h5>",
-                      "      <button id='" + value.name.replace(/\s+/g, '') + "' name='" + value.name.replace(/\s+/g, '') + "' value='", value.id, "' class='btn btn-info btnIngredient w-100 rounded-0'>Ajouter</button>",
-                      "    </div>",
-                      "  </div>",
-                      "</div>"
+                        "<div id='" + value.name.replace(/\s+/g, '') + "Card' class='col-6 col-md-6 col-lg-4 p-2'>",
+                        "  <div class='card rounded-0 border-0 h-100'>",
+                        "    <img class='card-img-top pt-3' src='uploads/", value.name, ".jpg'>",
+                        "    <div class='main-container w-100'>",
+                        "      <div class='card-body p-3 inner-container w-100'>",
+                        "        <h5 class='card-title text-dark'>",
+                            value.name,
+                        "        </h5>",
+                        "        <button id='" + value.name.replace(/\s+/g, '') + "' name='" + value.name + "' value='", value.id, "' class='btn btn-info btnIngredient w-100 rounded-0'>Ajouter</button>",
+                        "      </div>",
+                        "    </div>",
+                        "  </div>",
+                        "</div>"
                       ].join("\n"));
                       $('#ingredients').append(tr);
 
@@ -260,12 +262,12 @@
                             "  <div class='card rounded-0 border-0 h-100'>",
                             "    <img class='card-img-top pt-3' src='uploads/", value.name, ".jpg'>",
                             "    <div class='main-container w-100'>",
-                            "    <div class='card-body p-3 inner-container w-100'>",
-                            "      <h5 class='card-title text-dark'>",
+                            "      <div class='card-body p-3 inner-container w-100'>",
+                            "        <h5 class='card-title text-dark'>",
                                 value.name,
-                            "      </h5>",
-                            "      <button id='" + value.name.replace(/\s+/g, '') + "' name='" + value.name + "' value='", value.id, "' class='btn btn-info btnIngredient w-100 rounded-0'>Ajouter</button>",
-                            "    </div>",
+                            "        </h5>",
+                            "        <button id='" + value.name.replace(/\s+/g, '') + "' name='" + value.name + "' value='", value.id, "' class='btn btn-info btnIngredient w-100 rounded-0'>Ajouter</button>",
+                            "      </div>",
                             "    </div>",
                             "  </div>",
                             "</div>"
