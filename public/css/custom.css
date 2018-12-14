@@ -25,9 +25,21 @@ html {
     filter: blur(5px);
 }
 
+.main-container
+{
+    position: relative;
+    height: 120px;
+}
+
+.inner-container
+{
+    position: absolute;
+    bottom: 0%;
+}
+
 .bg-dark-op-10 { background: rgba(0, 0, 0, 0.1); }
-.bg-dark-op-20 { background: rgba(0, 0, 0, 0.2); } 
-.bg-dark-op-30 { background: rgba(0, 0, 0, 0.3); } 
-.bg-dark-op-40 { background: rgba(0, 0, 0, 0.4); } 
-.bg-dark-op-50 { background: rgba(0, 0, 0, 0.5); } 
-.bg-dark-op-60 { background: rgba(0, 0, 0, 0.6); } 
+.bg-dark-op-20 { background: rgba(0, 0, 0, 0.2); }
+.bg-dark-op-30 { background: rgba(0, 0, 0, 0.3); }
+.bg-dark-op-40 { background: rgba(0, 0, 0, 0.4); }
+.bg-dark-op-50 { background: rgba(0, 0, 0, 0.5); }
+.bg-dark-op-60 { background: rgba(0, 0, 0, 0.6); }
