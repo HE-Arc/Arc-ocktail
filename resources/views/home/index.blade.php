@@ -65,10 +65,12 @@
         }
     });
 
+    // Get a cookie by its name (used to retrieve the list of selected ingredients)
     function getCookie(name) {
         var value = "; " + document.cookie;
         var parts = value.split("; " + name + "=");
-        if (parts.length == 2) return parts.pop().split(";").shift();
+        if (parts.length == 2)
+            return parts.pop().split(";").shift();
     }
 
     let ingredients = [];
@@ -138,6 +140,9 @@
         selectIngredient(id, ingredient.name, false)
     });
 
+    /*
+    * Called when an ingredient has been selected and update the interface
+    */
     function selectIngredient(id, name, reload)
     {
         $(("#" + name + "Card").replace(/\s+/g, '')).hide(reload ? 0 : 200);
@@ -155,11 +160,17 @@
         }
     }
 
+    /*
+    * Modify the cookie by the list of selected ingredients
+    */
     function writeCookie()
     {
         document.cookie = "ingredients=" + JSON.stringify(ingredients) + "*" + JSON.stringify(ingredientsName);
     }
 
+    /*
+    * Secure the specified string by replace dangerous characters
+    */
     function encodeHTML(s) {
         return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;').replace(/"/g, '&quot;');
     }
@@ -224,6 +235,7 @@
         }
     });
 
+    // Show or hide the find button depending on the number of selected ingredients
     function showOrHideFindButton()
     {
         if (ingredients.length > 0) {

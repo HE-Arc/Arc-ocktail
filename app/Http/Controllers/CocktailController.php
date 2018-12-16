@@ -13,13 +13,18 @@ use Validator;
 
 class CocktailController extends Controller
 {
-
+    /*
+    * Used to show the cocktail creation form
+    */
     public function create()
     {
         $ingredients = Ingredient::pluck('name', 'id');
         return view("cocktail.create", ["ingredients"=> $ingredients]);
     }
 
+    /**
+    * Used when submitting the form to create a cocktail and add it to the database if all the required fields are filled
+    */
     public function store(Request $request)
     {
         $rules = [];
@@ -57,6 +62,9 @@ class CocktailController extends Controller
         return response()->json(['error'=>$validator->errors()->all()]);
     }
 
+    /**
+    * Find the cocktails that use at least one ingredient specified in the request.
+    */
     public function findCocktail()
     {
         $order = Input::get('orderby');
@@ -65,6 +73,7 @@ class CocktailController extends Controller
 
         //Cookie::queue(Cookie::make("ingredients", json_encode($ingredients), 60, "/", "arcocktail"));
 
+        // Get all possible cocktails
         $possibleCocktails = DB::table('cocktails')
             ->join('quantities', 'quantities.cocktail_id', '=', 'cocktails.id')
             ->whereIn('ingredient_id', $ingredients)
@@ -72,7 +81,9 @@ class CocktailController extends Controller
             ->groupBy('cocktail_id')
             ->get();
 
+        // Add the list of ingredients required for every cocktails
         $this->fillIngredient($possibleCocktails);
+        // Add the percentage of completion of the cocktail
         $this->setPercentageList($possibleCocktails, $ingredients);
 
         if (is_null($direction))
@@ -81,6 +92,7 @@ class CocktailController extends Controller
         if (is_null($order))
             $order = "percentage";
 
+        // Sort the cocktails
         if ($direction === "asc")
             $possibleCocktails = $possibleCocktails->sortBy($order);
         else {
@@ -90,6 +102,9 @@ class CocktailController extends Controller
         return view("cocktail.showcocktails", ["cocktails"=> $possibleCocktails]);
     }
 
+    /*
+    * Add the list of required ingredients for each cocktails
+    */
     private function fillIngredient($possibleCocktails)
     {
         foreach($possibleCocktails as $cocktail)
@@ -101,6 +116,9 @@ class CocktailController extends Controller
         }
     }
 
+    /*
+    * Calculate for each cocktails inside $possibleCocktails the percentage of ingredients available from $ingredients
+    */
     private function setPercentageList($possibleCocktails, $ingredients)
     {
         foreach($possibleCocktails as $cocktail)
@@ -115,6 +133,9 @@ class CocktailController extends Controller
         }
     }
 
+    /*
+    * Called to show a cocktail by its id
+    */
     public function show($id)
     {
         $cocktail = DB::table('cocktails')->where('id', $id)->first();

@@ -18,6 +18,9 @@ class IngredientController extends Controller
 
     }
 
+    /*
+    * Called to show the ingredient creation page
+    */
     public function create()
     {
         $ingredients = Ingredient::all();
@@ -33,6 +36,9 @@ class IngredientController extends Controller
         return view("ingredient.create", ["data" => $data]);
     }
 
+    /*
+    * Called when submitting the ingredient creation form
+    */
     public function store(Request $request)
     {
         $requestOk = false;
@@ -89,6 +95,9 @@ class IngredientController extends Controller
 
     }
 
+    /*
+    * Helper method to create a categorie
+    */
     private function createCategorie(Request $request)
     {
         $categorie = new Categorie;
@@ -96,6 +105,9 @@ class IngredientController extends Controller
         $categorie->save();
     }
 
+    /*
+    * Helper method to create an ingredient
+    */
     private function createIngredient(Request $request)
     {
         $ingredient = new Ingredient;
@@ -111,6 +123,9 @@ class IngredientController extends Controller
         $file->move($destinationPath, $request->ingredientName . "." . $file->getClientOriginalExtension());
     }
 
+    /*
+    * Helper method to create a unit
+    */
     private function createUnit(Request $request)
     {
         $unit = new unit;
