@@ -35,9 +35,9 @@
                 </div>
                 <form action="{{url('findCocktail')}}" method="get" id="cocktailForm">
                   <!-- TODO Bootstrap -->
-                  <button class="col-10 col-md-9 btn btn-info btn-lg my-3 rounded-0 text-truncate" id="btnFindCocktail" style="width: 80%">Trouver des cocktails</button>
-                  <button class="col-2 col-md-3 btn btn-danger btn-lg my-3 rounded-0" id="btnDeleteIngredients" style="float:right">X</button>
+                  <button class="col-12 btn btn-info btn-lg my-3 rounded-0 text-truncate" id="btnFindCocktail">Trouver des cocktails</button>
                   <ul class="list-group rounded-0 text-dark"></ul>
+                  <button class="col-12 btn btn-danger mt-3 rounded-0" id="btnDeleteIngredients">Vider la liste</button>
                 </form>
             </div>
         </div>

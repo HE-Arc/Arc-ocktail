@@ -27,6 +27,10 @@ html {
     filter: blur(5px);
 }
 
+.no-underline {
+  text-decoration: none !important
+}
+
 .bg-dark-op-10 { background: rgba(0, 0, 0, 0.1); }
 .bg-dark-op-20 { background: rgba(0, 0, 0, 0.2); }
 .bg-dark-op-30 { background: rgba(0, 0, 0, 0.3); }

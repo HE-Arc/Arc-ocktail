@@ -7,20 +7,18 @@
 @section('content')
 
 <div class="row p-2 m-0">
-
     <h1 class="col-12">{{$cocktail->name}}</h1>
 
-    <div class="col-12 col-lg-4 p-2">
+    <div class="col-12 col-lg-3 p-2">
         <div class="banner">
             <div class="banner" style="background-image: url('../uploads/{{$cocktail->name}}.jpg');">
             </div>
         </div>
-
     </div>
 
-    <div class="col-12 col-lg-3 p-2">
-        <div class="card rounded-0 border-0 bg-dark">
-            <div class="card-header">Ingrédients</div>
+    <div class="col-12 col-lg-4 p-2">
+        <div class="card rounded-0 border-0 bg-dark-op-40">
+            <div class="pb-0 px-3 pt-3"><h3>Ingrédients</h3></div>
             <div class="card-body">
                     <ul>
                         @foreach($ingredients as $ingredient)
@@ -32,8 +30,8 @@
     </div>
 
     <div class="col-12 col-lg-5 p-2">
-        <div class="card rounded-0 border-0 bg-dark">
-            <div class="card-header">Recette</div>
+        <div class="card rounded-0 border-0 bg-dark-op-40">
+            <div class="pb-0 px-3 pt-3"><h3>Recette</h3></div>
             <div class="card-body">
                 <p class="card-text">
                     {{$cocktail->recipe}}
@@ -41,8 +39,6 @@
             </div>
         </div>
     </div>
-
-
 </div>
 
 @endsection
