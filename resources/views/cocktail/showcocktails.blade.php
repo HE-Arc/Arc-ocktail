@@ -17,17 +17,17 @@
             <div class="dropdown p-2 col-6 col-lg-4 align-self-center">
                 <button class="btn btn-light dropdown-toggle w-100 rounded-0" type="button" id="orderMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Trier par</button>
                 <div class="dropdown-menu w-75 rounded-0 border-0 m-0" aria-labelledby="orderMenu">
-                    <a class="dropdown-item" href="{{url()->full()}}&orderby=name">Nom</a>  <!--Not the cleaniest solution-->
-                    <a class="dropdown-item" href="{{url()->full()}}&orderby=alcohol_degree">Degré d'alcool</a>
-                    <a class="dropdown-item" href="{{url()->full()}}&orderby=percentage">Pourcentage d'ingrédient</a>
+                    <a class="dropdown-item text-truncate" href="{{url()->full()}}&orderby=name">Nom</a>  <!--Not the cleaniest solution-->
+                    <a class="dropdown-item text-truncate" href="{{url()->full()}}&orderby=alcohol_degree">Degré d'alcool</a>
+                    <a class="dropdown-item text-truncate" href="{{url()->full()}}&orderby=percentage">Pourcentage d'ingrédient</a>
                 </div>
             </div>
 
             <div class="dropdown p-2 col-6 col-lg-4">
                 <button class="btn btn-light dropdown-toggle w-100 rounded-0" type="button" id="orderDirection" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ordre</button>
                 <div class="dropdown-menu w-75 rounded-0 border-0 m-0" aria-labelledby="orderDirection">
-                    <a class="dropdown-item" href="{{url()->full()}}&direction=asc">Ascendant</a>
-                    <a class="dropdown-item" href="{{url()->full()}}&direction=desc">Descendant</a>
+                    <a class="dropdown-item text-truncate" href="{{url()->full()}}&direction=asc">Ascendant</a>
+                    <a class="dropdown-item text-truncate" href="{{url()->full()}}&direction=desc">Descendant</a>
                 </div>
             </div>
         </div>
@@ -35,7 +35,7 @@
         <div id="cocktails" class="row">
             @foreach ($cocktails as $key => $cocktail)
                 <div class='col-6 col-lg-3 p-2'>
-                    <a href="{{url('cocktail/' . $cocktail->cocktail_id)}}">
+                    <a href="{{url('cocktail/' . $cocktail->cocktail_id)}}" class="no-underline">
                         <div class='card rounded-0 border-0'>
                             <img class='card-img-top p-1' src='uploads/{{strtolower($cocktail->name)}}.jpg'>
                             <div class='card-body p-3'>
