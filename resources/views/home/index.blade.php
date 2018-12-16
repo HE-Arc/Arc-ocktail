@@ -99,7 +99,7 @@
                       var tr = $([
                         "<div id='" + value.name.replace(/\s+/g, '') + "Card' class='col-6 col-md-6 col-lg-4 p-2'>",
                         "  <div class='card rounded-0 border-0 h-100'>",
-                        "    <img class='card-img-top pt-3' src='uploads/", value.name, ".jpg'>",
+                        "    <img class='card-img-top pt-3' src='uploads/", value.name.toLowerCase(), ".jpg'>",
                         "    <div class='main-container w-100'>",
                         "      <div class='card-body p-3 inner-container w-100'>",
                         "        <h5 class='card-title text-dark'>",
@@ -261,7 +261,7 @@
                             var tr = $([
                             "<div id='" + value.name.replace(/\s+/g, '') + "Card' class='col-6 col-md-6 col-lg-4 p-2'>",
                             "  <div class='card rounded-0 border-0 h-100'>",
-                            "    <img class='card-img-top pt-3' src='uploads/", value.name, ".jpg'>",
+                            "    <img class='card-img-top pt-3' src='uploads/", value.name.toLowerCase(), ".jpg'>",
                             "    <div class='main-container w-100'>",
                             "      <div class='card-body p-3 inner-container w-100'>",
                             "        <h5 class='card-title text-dark'>",
