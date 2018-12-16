@@ -27,6 +27,18 @@ html {
     filter: blur(5px);
 }
 
+.main-container
+{
+    position: relative;
+    height: 120px;
+}
+
+.inner-container
+{
+    position: absolute;
+    bottom: 0%;
+}
+
 .no-underline {
   text-decoration: none !important
 }

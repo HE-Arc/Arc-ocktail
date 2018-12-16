@@ -59,7 +59,7 @@
             {
                 for(let i = 0; i < ids.length; i++)
                 {
-                    selectIngredient(ids[i].toString(), names[i].toString());
+                    selectIngredient(ids[i].toString(), names[i].toString(), true);
                 }
             }
         }
@@ -96,17 +96,19 @@
                   $.each(data, function(i, value)
                   {
                       var tr = $([
-                      "<div id='" + (value.name + "Card").replace(/\s+/g, '') + "' class='col-6 col-md-6 col-lg-4 p-2'>",
-                      "  <div class='card rounded-0 border-0'>",
-                      "    <img class='card-img-top p-1' src='uploads/", value.name, ".jpg'>",
-                      "    <div class='card-body p-3'>",
-                      "      <h5 class='card-title text-dark'>",
-                          value.name,
-                      "      </h5>",
-                      "      <button id='" + value.name.replace(/\s+/g, '') + "' name='" + value.name.replace(/\s+/g, '') + "' value='", value.id, "' class='btn btn-info btnIngredient w-100 rounded-0'>Ajouter</button>",
-                      "    </div>",
-                      "  </div>",
-                      "</div>"
+                        "<div id='" + value.name.replace(/\s+/g, '') + "Card' class='col-6 col-md-6 col-lg-4 p-2'>",
+                        "  <div class='card rounded-0 border-0 h-100'>",
+                        "    <img class='card-img-top pt-3' src='uploads/", value.name, ".jpg'>",
+                        "    <div class='main-container w-100'>",
+                        "      <div class='card-body p-3 inner-container w-100'>",
+                        "        <h5 class='card-title text-dark'>",
+                            value.name,
+                        "        </h5>",
+                        "        <button id='" + value.name.replace(/\s+/g, '') + "' name='" + value.name + "' value='", value.id, "' class='btn btn-info btnIngredient w-100 rounded-0'>Ajouter</button>",
+                        "      </div>",
+                        "    </div>",
+                        "  </div>",
+                        "</div>"
                       ].join("\n"));
                       $('#ingredients').append(tr);
 
@@ -132,12 +134,12 @@
     $('#ingredients').on('click', '.btnIngredient', function (e){
         let ingredient = e.target;
         let id = ingredient.value;
-        selectIngredient(id, ingredient.name)
+        selectIngredient(id, ingredient.name, false)
     });
 
-    function selectIngredient(id, name)
+    function selectIngredient(id, name, reload)
     {
-        $(("#" + name + "Card").replace(/\s+/g, '')).hide(200);
+        $(("#" + name + "Card").replace(/\s+/g, '')).hide(reload ? 0 : 200);
         if (!ingredients.includes(parseInt(id)))
         {
             ingredients.push(parseInt(id));
@@ -145,7 +147,7 @@
             $('.list-group').append("<li id='listItem" + parseInt(id) + "' class='list-group-item p-2 rounded-0 border-0' value='" + parseInt(id) + "'><span class=''>" + encodeHTML(name) + "</span><button name='" + name + "' value='" + encodeHTML(id) +"' class='close btnRemoveIngredient'>&times;</button></li>");
             $('.list-group').append("<input type='hidden' class='hidden-item' name='ingredients[]' value='" + parseInt(id) + "' />");
             $('#listItem' + parseInt(id)).hide();
-            $('#listItem' + parseInt(id)).show(500);
+            $('#listItem' + parseInt(id)).show(reload ? 0 : 500);
             showOrHideFindButton();
             checkForEmptyCategory();
             writeCookie();
@@ -257,13 +259,15 @@
                             loadedIngredientsName.push(value.name);
                             var tr = $([
                             "<div id='" + value.name.replace(/\s+/g, '') + "Card' class='col-6 col-md-6 col-lg-4 p-2'>",
-                            "  <div class='card rounded-0 border-0'>",
-                            "    <img class='card-img-top p-1' src='uploads/", value.name, ".jpg'>",
-                            "    <div class='card-body p-3'>",
-                            "      <h5 class='card-title text-dark'>",
+                            "  <div class='card rounded-0 border-0 h-100'>",
+                            "    <img class='card-img-top pt-3' src='uploads/", value.name, ".jpg'>",
+                            "    <div class='main-container w-100'>",
+                            "      <div class='card-body p-3 inner-container w-100'>",
+                            "        <h5 class='card-title text-dark'>",
                                 value.name,
-                            "      </h5>",
-                            "      <button id='" + value.name.replace(/\s+/g, '') + "' name='" + value.name + "' value='", value.id, "' class='btn btn-info btnIngredient w-100 rounded-0'>Ajouter</button>",
+                            "        </h5>",
+                            "        <button id='" + value.name.replace(/\s+/g, '') + "' name='" + value.name + "' value='", value.id, "' class='btn btn-info btnIngredient w-100 rounded-0'>Ajouter</button>",
+                            "      </div>",
                             "    </div>",
                             "  </div>",
                             "</div>"
