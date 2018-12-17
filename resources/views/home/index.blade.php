@@ -95,7 +95,6 @@
                   var counter = 0;
                   $.each(data, function(i, value)
                   {
-                      value = value.toLowerCase();
                       var tr = $([
                         "<div id='" + value.name.replace(/\s+/g, '') + "Card' class='col-6 col-md-6 col-lg-4 p-2'>",
                         "  <div class='card rounded-0 border-0 h-100'>",
