@@ -24,12 +24,6 @@
                     <img src="{{ asset('icons/logo.png') }}" width="30" height="30" class="d-inline-block align-top" alt="">
                     Arc'ocktail
                 </a>
-
-                <form class="form-inline my-2 my-lg-0">
-                    <a href="{{url('/cocktail/create')}}" class="btn btn-outline-success mr-2 my-2 my-sm-0 rounded-0">Création de cocktail</a>
-                    <a href="{{url('/ingredient/create')}}" class="btn btn-outline-success mr-2 my-2 my-sm-0 rounded-0">Création d'ingrédient</a>
-                    <!-- <button class="btn btn-primary my-2 my-sm-0" type="submit">Register</button> -->
-                </form>
             </div>
         </nav>
 
