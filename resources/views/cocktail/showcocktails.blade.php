@@ -36,9 +36,9 @@
             @foreach ($cocktails as $key => $cocktail)
                 <div class='col-6 col-lg-3 p-2'>
                     <a href="{{url('cocktail/' . $cocktail->cocktail_id)}}" class="no-underline">
-                        <div class='card rounded-0 border-0'>
+                        <div class='card rounded-0 border-0 h-100'>
                             <img class='card-img-top p-1' src='uploads/{{strtolower($cocktail->name)}}.jpg'>
-                            <div class='card-body p-3'>
+                            <div class='card-body p-3 align-text-bottom'>
                                 <h5 class='card-title'>{{$cocktail->name}} ({{$cocktail->alcohol_degree}}°)</h5>
                                 <div class="progress rounded-0 mb-1">
                                     <div class="progress-bar bg-success" style="width: {{$cocktail->percentage*100}}%" role="progressbar">{{$cocktail->percentage*100}}%</div>

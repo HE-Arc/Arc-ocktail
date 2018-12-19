@@ -50,7 +50,7 @@ class CocktailController extends Controller
             $file = $request->image;
             //Move Uploaded File
             $destinationPath = 'uploads';
-            $file->move($destinationPath,$file->getClientOriginalName());
+            $file->move($destinationPath, htmlentities($cocktail->name) . ".jpg");
 
             return response()->json(['success'=>'Entry successfully added']);
         }
@@ -62,8 +62,6 @@ class CocktailController extends Controller
         $order = Input::get('orderby');
         $direction = Input::get('direction');
         $ingredients = Input::get('ingredients');
-
-        //Cookie::queue(Cookie::make("ingredients", json_encode($ingredients), 60, "/", "arcocktail"));
 
         $possibleCocktails = DB::table('cocktails')
             ->join('quantities', 'quantities.cocktail_id', '=', 'cocktails.id')
