@@ -50,7 +50,7 @@ class CocktailController extends Controller
             $file = $request->image;
             //Move Uploaded File
             $destinationPath = 'uploads';
-            $file->move($destinationPath, htmlentities($cocktail->name) . ".jpg");
+            $file->move($destinationPath, $cocktail->name . ".jpg");
 
             return response()->json(['success'=>'Entry successfully added']);
         }
