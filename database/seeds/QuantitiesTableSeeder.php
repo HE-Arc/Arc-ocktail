@@ -144,6 +144,17 @@ class QuantitiesTableSeeder extends Seeder
             ['quantity' => '2',
             'cocktail_id' => '10',
             'ingredient_id' => '25'],
+            ['quantity' => '2',
+            'cocktail_id' => '10',
+            'ingredient_id' => '25'],
+
+            ['quantity' => '9',
+            'cocktail_id' => '11',
+            'ingredient_id' => '12'],
+
+            ['quantity' => '1',
+            'cocktail_id' => '11',
+            'ingredient_id' => '16'],
         ]);
     }
 }

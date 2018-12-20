@@ -63,6 +63,9 @@ class CocktailsTableSeeder extends Seeder
             ['name' => 'Blood and Sand',
             'alcohol_degree' => '40',
             'recipe' => "Mélangez tous les ingrédients au shaker avec de la glace. Versez dans un verre à cocktail en retenant les glaçons."],
+            ['name' => 'Oolong Cha',
+            'alcohol_degree' => '100',
+            'recipe' => "Remplissez à 90% un verre de vodka. Ajouter du whiskey pour remplir les 10% restants."]
         ]);
     }
 }
